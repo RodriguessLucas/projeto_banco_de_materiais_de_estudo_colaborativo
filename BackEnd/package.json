@@ -1,0 +1,25 @@
+{
+  "name": "banco_material_estudo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Equipe no readme",
+  "license": "ISC",
+  "description": "banco de materiais para estudo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RodriguessLucas/projeto_banco_de_materiais_de_estudo_colaborativo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RodriguessLucas/projeto_banco_de_materiais_de_estudo_colaborativo/issues"
+  },
+  "homepage": "https://github.com/RodriguessLucas/projeto_banco_de_materiais_de_estudo_colaborativo#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "pg": "^8.16.3",
+    "sequelize": "^6.37.7"
+  }
+}
