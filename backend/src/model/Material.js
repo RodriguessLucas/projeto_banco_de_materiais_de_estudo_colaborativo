@@ -4,7 +4,7 @@ const sequelize = require('../config/database');
 
 const Material = sequelize.define('Material',
     {
-        id_materia: {
+        id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
