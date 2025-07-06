@@ -17,7 +17,7 @@ const Categoria = sequelize.define('Categoria',
         },
 
     },
-    
+
     {
         tableName:'Categoria',
         timestamps: true,
@@ -25,4 +25,4 @@ const Categoria = sequelize.define('Categoria',
     },
 );
 
-modeule.exports = Categoria;
+module.exports = Categoria;
