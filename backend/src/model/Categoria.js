@@ -4,6 +4,23 @@ const sequelize = require('../config/database');
 
 const Categoria = sequelize.define('Categoria',
     {
+        id_categoria:{
+            type:DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
 
-    }
-)
+        nome_categoria:{
+            type: DataTypes.STRING,
+            allowNull:false,
+            unique:true,
+        },
+
+    },
+    {
+        tableName:'Categoria',
+        timestamps: true,
+    },
+);
+
+modeule.exports = Categoria;
