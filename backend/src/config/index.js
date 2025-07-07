@@ -13,21 +13,48 @@ Categoria.init(conexao);
 Materia.init(conexao);
 Material.init(conexao);
 
-// relaão categoria/materia feita
+// relacão categoria/materia feita
 Categoria.hasMany(Materia,
     {
         foreignKey: 'id_categoria',
-        as : 'materias_relacionadas'
+        as : 'materias'
     }
 );
 
 Materia.belongsTo(Categoria, 
     {
         foreignKey: 'id_categoria',
-        as: 'categoria',
+        as: 'materia',
     }
 );
 
-// falta relação materia/material 
-// falta relação usuario material
+//relação materia/material 
+Materia.hasMany(Material,
+    {
+        foreignKey: 'id_materia',
+        as: 'materiais'
+    }
+);
 
+Material.belongsTo(Materia,
+    {
+        foreignKey: 'id_materia',
+        as: 'material',
+    }
+);
+
+
+//relação usuario material
+Usuario.hasMany(Material ,
+    {
+        foreignKey: 'id_usuario',
+        as: 'materiais_criados'
+    }
+);
+
+Material.belongsTo(Usuario,
+    {
+        foreignKey: 'id_usuario',
+        as : 'criador'
+    }
+)
