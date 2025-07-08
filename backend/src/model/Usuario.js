@@ -1,42 +1,47 @@
-const {DataTypes} = require('sequelize');
-const sequelize = require('../config/database');
+const { Model, DataTypes } = require('sequelize');
 
-
-const Usuario = sequelize.define('Usuario',
-    {
-        id: {
-            type : DataTypes.INTEGER,
+class Usuario extends Model {
+  static init(sequelize) {
+    super.init({
+        id_usuario:{
+            type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
-
         nome: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-
-        login : {
+        login: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true,
         },
-
-        senha : {
+        senha: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-
-        qntd_estrelas : {
+        qntd_estrelas: {
             type: DataTypes.INTEGER,
             defaultValue: 0,
         },
-    },
-
+    }, 
     {
-        tableName: 'Usuario',
+        sequelize,
+        tableName: 'usuarios',
         timestamps: true,
-        underscored: true,
-    }
-);
+        underscored: true, 
+        id:false
+    });
+  }
+
+    static associate(models) {
+        this.hasMany(models.Material, {
+            foreignKey: 'id_usuario',
+            as: 'materiais_criados'
+        }
+    );
+  }
+}
 
 module.exports = Usuario;

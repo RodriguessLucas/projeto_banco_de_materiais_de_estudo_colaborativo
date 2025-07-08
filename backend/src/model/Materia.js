@@ -1,37 +1,56 @@
-const {DataTypes} = require('sequelize');
-const sequelize = require('../config/database');
+const {Model, DataTypes } = require('sequelize');
 
+class Materia extends Model{
+    static init(sequelize){
+        super.init({
+            id: {
+                type: DataTypes.INTEGER,
+                autoIncrement: true,
+                primaryKey: true,
+            },
 
-const Materia = sequelize.define('Materia',
-    {
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true,
+            id_categoria:{
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'categorias',
+                    key: 'id_categoria'
+                }
+            },
+
+            nome_materia: {
+                type: DataTypes.STRING,
+                allowNull:false,
+                unique: true,
+            },
+
         },
 
-        id_categoria:{
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                mode: 'Categoria',
-                key: 'id_categoria'
+        {   
+            sequelize,
+            tableName: 'materias',
+            timestamps: true,
+            underscored: true,
+        }
+        )
+    }
+
+    static associate(models) {
+        this.hasMany(models.Material,
+            {
+                foreignKey: 'id_materia',
+                as: 'materias'
             }
-        },
+        )
 
-        nome_materia: {
-            type: DataTypes.STRING,
-            allowNull:false,
-            unique: true,
-        },
+        this.belongsTo(models.Categoria,
+            {
+                foreignKey: 'id_categoria',
+                as: 'categorias'
+            }
+        )
+    }
+}
 
-    },
 
-    {
-        tableName: 'Materia',
-        timestamps: true,
-        underscored: true,
-    },
-);
-
-module.exports = Material;
+module.exports = Materia;
