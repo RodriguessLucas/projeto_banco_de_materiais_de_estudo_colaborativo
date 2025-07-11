@@ -4,9 +4,9 @@ const bcrypt  = require('bcryptjs');
 class UsuarioService{
 
     async criarUsuario(dadosUsuario){
-        const{ email, senha} = dadosUsuario;
+        const{ login, senha} = dadosUsuario;
 
-        const usuarioExiste = await Usuario.findOne({where:{email}});
+        const usuarioExiste = await Usuario.findOne({where:{login}});
         if(usuarioExiste){
             throw new Error("Email em uso!");
         }
