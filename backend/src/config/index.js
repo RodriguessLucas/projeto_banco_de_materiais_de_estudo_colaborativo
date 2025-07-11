@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const dbConfig = require('../config/database');
+const dbConfig = require('./database/database.js');
 
 const Usuario = require('../model/Usuario');
 const Categoria = require ('../model/Categoria');
