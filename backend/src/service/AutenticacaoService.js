@@ -11,8 +11,8 @@ class AutenticacaoService{
             throw new Error('E-mail ou senha inválido! Tente novamente');
         }
 
-        const senha = await bcrypt.compare(senha, usuario.senha);
-        if(!senha){
+        const senhaCriptografada = await bcrypt.compare(senha, usuario.senha);
+        if(!senhaCriptografada){
             throw new Error('E-mail ou senha inválido! Tente novamente');
         }
 
