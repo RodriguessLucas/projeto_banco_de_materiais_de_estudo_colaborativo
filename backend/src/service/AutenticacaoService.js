@@ -1,18 +1,21 @@
+require('dotenv').config();
 const Usuario = require('../model/Usuario');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { where } = require('sequelize');
 
 class AutenticacaoService{
-    async login(email, senha){
+    async login(login, senha){
 
-        const usuario = await Usuario.findOne( {where: {email} } );
+        const usuario = await Usuario.findOne( {where: {login} } );
         if(!usuario){
+            console.log("Usuario nao encontrado");
             throw new Error('E-mail ou senha inválido! Tente novamente');
         }
 
         const senhaCriptografada = await bcrypt.compare(senha, usuario.senha);
         if(!senhaCriptografada){
+            console.log("senha n encontrada");
             throw new Error('E-mail ou senha inválido! Tente novamente');
         }
 
@@ -24,6 +27,8 @@ class AutenticacaoService{
 
         usuario.senha = undefined;
 
+        console.log(usuario);
+        console.log(token);
         return {usuario, token};
 
     }

@@ -15,7 +15,6 @@ const swaggerOptions = {
           type: 'object',
           properties: {
             nome: { type: 'string' },
-            email: { type: 'string' },
             login: { type: 'string' },
             senha: { type: 'string' },
           },
@@ -23,7 +22,7 @@ const swaggerOptions = {
         LoginRequest: {
           type: 'object',
           properties: {
-            email: { type: 'string', example: 'exemplo@email.com' },
+            login: { type: 'string', example: 'exemplo@email.com' },
             senha: { type: 'string', example: 'senha123' }
           }
         },
@@ -35,7 +34,7 @@ const swaggerOptions = {
               properties: {
                 id_usuario: { type: 'integer' },
                 nome: { type: 'string' },
-                email: { type: 'string' }
+                login: { type: 'string' }
               }
             },
             token: { type: 'string' }
