@@ -1,32 +1,33 @@
-const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '..', '.env')});
+// No arquivo: src/server.js
 
+require('dotenv').config();
 const express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
 
 const sequelize = require('./config');
-require('./config/index');
+const routes = require('./routes/routes');
+const swaggerOptions = require('./config/swaggerConfig'); 
 
 const app = express();
+const PORT = process.env.PORT || 5555;
+
 app.use(express.json());
-const PORT = 5555;
 
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-(async () =>{
-    try{
+app.use(routes);
 
-        await sequelize.sync({alter:true});
+(async () => {
+  try {
+    await sequelize.sync({ alter: true });
+    console.log(" Tabelas sincronizadas com o banco de dados.");
 
-        console.log("Sicronizado com sucesso!");
-
-        app.listen(PORT, () =>{
-            console.log(` Servidor rodando em: http://localhost:${PORT}`);
-        });
-    }
-    catch( error){
-        console.log("Falha ao sicronizar: " + error);
-    };
-    
-}) ();
-
-
-
+    app.listen(PORT, () => {
+      console.log(` Servidor rodando em: http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error("Falha ao sincronizar ou iniciar o servidor:", error);
+  }
+})();
