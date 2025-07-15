@@ -18,26 +18,7 @@ const swaggerOptions = {
         },
       },
       schemas: {
-        Usuario: {
-          type: "object",
-<<<<<<< HEAD
-        // ========== SCHEMAS DE CADASTRO ==========
-        UsuarioRequest: {
-          type: 'object',
-          required: ['nome', 'login', 'senha'],
-          properties: {
-            nome: { type: 'string', example: 'nome sobrenome' },
-            login: { type: 'string', example: 'teste@gmail.com' },
-            senha: { type: 'string', format: 'password', example: '123456' },
-          },
-        },
-        CadastroUsuarioResponseDTO: {
-          type: 'object',
-          properties: {
-            nome: { type: 'string', example: 'nome sobrenome'  },
-            login: { type: 'string', example: 'teste@gmail.com' },
-          }
-=======
+        // ========== SCHEMAS DE USUÁRIO ==========
         Usuario: {
           type: "object",
           properties: {
@@ -46,69 +27,69 @@ const swaggerOptions = {
             senha: { type: "string" },
           },
         },
-        LoginRequest: {
+        UsuarioRequest: {
+          type: "object",
+          required: ["nome", "login", "senha"],
+          properties: {
+            nome: { type: "string", example: "nome sobrenome" },
+            login: { type: "string", example: "teste@gmail.com" },
+            senha: { type: "string", format: "password", example: "123456" },
+          },
+        },
+        CadastroUsuarioResponseDTO: {
           type: "object",
           properties: {
-            login: { type: "string", example: "exemplo@email.com" },
-            senha: { type: "string", example: "senha123" },
+            nome: { type: "string", example: "nome sobrenome" },
+            login: { type: "string", example: "teste@gmail.com" },
           },
->>>>>>> 2615af0 (feat: ajustando autenticação e o swagger)
         },
         RespostaUsuarioCriado: {
-          type: 'object',
+          type: "object",
           properties: {
             usuarioDTO: {
-              $ref: '#/components/schemas/CadastroUsuarioResponseDTO'
+              $ref: "#/components/schemas/CadastroUsuarioResponseDTO",
             },
             message: {
-              type: 'string',
-              example: 'Usuário cadastrado com sucesso!'
-            }
-          }
+              type: "string",
+              example: "Usuário cadastrado com sucesso!",
+            },
+          },
         },
 
         // ========== SCHEMAS DE LOGIN ==========
         LoginRequest: {
-          type: 'object',
-          required: ['login', 'senha'],
+          type: "object",
+          required: ["login", "senha"],
           properties: {
-            login: { type: 'string', example: 'teste@gmail.com' },
-            senha: { type: 'string', format: 'password', example: '123456' }
-          }
+            login: { type: "string", example: "teste@gmail.com" },
+            senha: { type: "string", format: "password", example: "123456" },
+          },
         },
         UsuarioDetalhadoDTO: {
-            type: 'object',
-            properties: {
-              id: { type: 'integer', example: 3 },
-              nome: { type: 'string', example: 'nome sobrenome' },
-              login: { type: 'string', example: 'teste@email.com' },
-              estrelas: { type: 'integer', example: 0 },
-              createAt: { type: 'string', format: 'date-time', example: '2025-07-15T17:03:43.052Z' }
-            }
+          type: "object",
+          properties: {
+            id: { type: "integer", example: 3 },
+            nome: { type: "string", example: "nome sobrenome" },
+            login: { type: "string", example: "teste@email.com" },
+            estrelas: { type: "integer", example: 0 },
+            createAt: {
+              type: "string",
+              format: "date-time",
+              example: "2025-07-15T17:03:43.052Z",
+            },
+          },
         },
         LoginResponse: {
           type: "object",
           properties: {
-<<<<<<< HEAD
             usuarioDTO: {
-              $ref: '#/components/schemas/UsuarioDetalhadoDTO'
+              $ref: "#/components/schemas/UsuarioDetalhadoDTO",
             },
             token: {
-              type: 'string',
-              example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NTI1OTkwODksImV4cCI6MTc1MjYxMzQ4OX0.tj6kLAxz1l86IW76PUP6CFLKPVXn_QLTw3Ssasl2CdY'
-            }
-          }
-        }
-=======
-            usuario: {
-              type: "object",
-              properties: {
-                id_usuario: { type: "integer" },
-                nome: { type: "string" },
-                login: { type: "string" },
-              },
+              type: "string",
+              example:
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NTI1OTkwODksImV4cCI6MTc1MjYxMzQ4OX0.tj6kLAxz1l86IW76PUP6CFLKPVXn_QLTw3Ssasl2CdY",
             },
-            token: { type: "string" },
           },
         },
         PerfilUsuarioResponse: {
@@ -133,63 +114,47 @@ const swaggerOptions = {
             },
           },
         },
->>>>>>> 2615af0 (feat: ajustando autenticação e o swagger)
       },
     },
     paths: {
       "/cadastrarUsuario": {
-      "/cadastrarUsuario": {
         post: {
-          summary: "Cria um novo usuário",
-          tags: ["Usuários"],
           summary: "Cria um novo usuário",
           tags: ["Usuários"],
           requestBody: {
             required: true,
             content: {
               "application/json": {
-              "application/json": {
                 schema: {
-<<<<<<< HEAD
-                  $ref: '#/components/schemas/UsuarioRequest', // Ajustado
-=======
-                  $ref: "#/components/schemas/Usuario",
->>>>>>> 2615af0 (feat: ajustando autenticação e o swagger)
+                  $ref: "#/components/schemas/UsuarioRequest",
                 },
               },
             },
           },
           responses: {
-<<<<<<< HEAD
-            '201': {
-              description: 'Usuário criado com sucesso',
+            201: {
+              description: "Usuário criado com sucesso",
               content: {
-                'application/json': {
+                "application/json": {
                   schema: {
-                    $ref: '#/components/schemas/RespostaUsuarioCriado',
+                    $ref: "#/components/schemas/RespostaUsuarioCriado",
                   },
                 },
               },
             },
-            '400': { description: 'Erro na requisição' },
-=======
-            201: { description: "Usuário criado com sucesso" },
-            400: { description: "Erro na requisição" },
->>>>>>> 2615af0 (feat: ajustando autenticação e o swagger)
+            400: {
+              description: "Erro na requisição",
+            },
           },
         },
       },
       "/login": {
-      "/login": {
         post: {
-          summary: "Autentica um usuário e retorna um token",
-          tags: ["Usuários"],
           summary: "Autentica um usuário e retorna um token",
           tags: ["Usuários"],
           requestBody: {
             required: true,
             content: {
-              "application/json": {
               "application/json": {
                 schema: {
                   $ref: "#/components/schemas/LoginRequest",
@@ -218,38 +183,7 @@ const swaggerOptions = {
         get: {
           summary: "Retorna o perfil do usuário autenticado",
           tags: ["Usuários"],
-          security: [{ bearerAuth: [] }], // ✅ isso habilita o botão "Authorize"
-          responses: {
-            200: {
-              description: "Perfil do usuário autenticado",
-              content: {
-                "application/json": {
-                "application/json": {
-                  schema: {
-                    $ref: "#/components/schemas/LoginResponse",
-                  },
-                },
-              },
-            },
-<<<<<<< HEAD
-            '401': {
-              description: 'Não autorizado (login ou senha inválidos)'
-            }
-          }
-        }
-      }
-=======
-            401: {
-              description: "Não autorizado (e-mail ou senha inválidos)",
-            },
-          },
-        },
-      },
-      "/usuarios/perfil": {
-        get: {
-          summary: "Retorna o perfil do usuário autenticado",
-          tags: ["Usuários"],
-          security: [{ bearerAuth: [] }], // ✅ isso habilita o botão "Authorize"
+          security: [{ bearerAuth: [] }],
           responses: {
             200: {
               description: "Perfil do usuário autenticado",
@@ -267,11 +201,9 @@ const swaggerOptions = {
           },
         },
       },
->>>>>>> 2615af0 (feat: ajustando autenticação e o swagger)
     },
   },
   apis: [],
 };
 
 module.exports = swaggerOptions;
-
