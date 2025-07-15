@@ -14,6 +14,7 @@ class UsuarioService{
 
         const senhaHash = await bcrypt.hash(senha, 10);
 
+
         const novoUsuario = await Usuario.create({
             ...dadosUsuario,
             senha: senhaHash
@@ -22,6 +23,7 @@ class UsuarioService{
         const usuarioDTO = toCadastroRes(novoUsuario);
         const message = 'Usuário cadastrado com sucesso!';
         return {usuarioDTO, message};
+
     }
 
 }

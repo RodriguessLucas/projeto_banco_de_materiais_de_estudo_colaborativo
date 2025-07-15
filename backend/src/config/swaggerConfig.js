@@ -28,7 +28,6 @@ const swaggerOptions = {
             login: { type: 'string' },
           }
         },
-        // Schema para a RESPOSTA completa de sucesso
         RespostaUsuarioCriado: {
           type: 'object',
           properties: {
@@ -73,6 +72,37 @@ const swaggerOptions = {
           },
         },
       },
+      '/login': {
+        post: {
+          summary: 'Autentica um usuário e retorna um token',
+          tags: ['Usuários'],
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/LoginRequest' 
+                }
+              }
+            }
+          },
+          responses: {
+            '200': {
+              description: 'Login bem-sucedido',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/LoginResponse' 
+                  }
+                }
+              }
+            },
+            '401': {
+              description: 'Não autorizado (e-mail ou senha inválidos)'
+            }
+          }
+        }
+      }
     },
   },
   apis: [],
