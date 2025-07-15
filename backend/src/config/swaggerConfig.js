@@ -1,4 +1,4 @@
-const PORT = process.env.PORT || 5555;
+const PORT = 5555;
 
 const swaggerOptions = {
   definition: {
@@ -11,35 +11,33 @@ const swaggerOptions = {
     servers: [{ url: `http://localhost:${PORT}` }],
     components: {
       schemas: {
+
         Usuario: {
           type: 'object',
+          required: ['nome', 'email', 'login', 'senha'],
           properties: {
             nome: { type: 'string' },
             login: { type: 'string' },
-            senha: { type: 'string' },
+            senha: { type: 'string', format: 'password' },
           },
         },
-        LoginRequest: {
+        UsuarioDTO: {
           type: 'object',
           properties: {
-            login: { type: 'string', example: 'exemplo@email.com' },
-            senha: { type: 'string', example: 'senha123' }
+            nome: { type: 'string'  },
+            login: { type: 'string' },
           }
         },
-        LoginResponse: {
+        RespostaUsuarioCriado: {
           type: 'object',
           properties: {
-            usuario: {
-              type: 'object',
-              properties: {
-                id_usuario: { type: 'integer' },
-                nome: { type: 'string' },
-                login: { type: 'string' },
-                qntd_estrelas: {type: 'integer'},
-                criado : {type: 'date-time'}
-              }
+            usuarioDTO: {
+              $ref: '#/components/schemas/UsuarioDTO'
             },
-            token: { type: 'string' }
+            message: {
+              type: 'string',
+              example: 'Usuário cadastrado com sucesso!'
+            }
           }
         }
       },
@@ -60,7 +58,16 @@ const swaggerOptions = {
             },
           },
           responses: {
-            '201': { description: 'Usuário criado com sucesso' },
+            '201': {
+              description: 'Usuário criado com sucesso',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/RespostaUsuarioCriado',
+                  },
+                },
+              },
+            },
             '400': { description: 'Erro na requisição' },
           },
         },

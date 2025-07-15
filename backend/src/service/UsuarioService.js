@@ -1,3 +1,4 @@
+const { toCadastroRes } = require('../dto/UsuarioDTO');
 const Usuario = require('../model/Usuario');
 const bcrypt  = require('bcryptjs');
 
@@ -18,10 +19,11 @@ class UsuarioService{
             ...dadosUsuario,
             senha: senhaHash
         });
+        
+        const usuarioDTO = toCadastroRes(novoUsuario);
+        const message = 'Usuário cadastrado com sucesso!';
+        return {usuarioDTO, message};
 
-
-        novoUsuario.senha = undefined;
-        return novoUsuario;
     }
 
 }

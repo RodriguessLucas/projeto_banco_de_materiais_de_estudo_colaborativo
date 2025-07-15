@@ -1,17 +1,29 @@
-function toLoginRes(usuario){
-    if(!usuario){
-        return null;
-    }
+function toCadastroRes(usuario) {
+  if (!usuario) {
+    return null;
+  }
 
-    return {
-        id: usuario.id_usuario,
-        nome: usuario.nome,
-        login: usuario.login,
-        estrelas: usuario.qntd_estrelas,
-        createAt: usuario.createdAt,
-    }
+  return {
+    nome: usuario.nome,
+    login: usuario.login,
+  };
+}
+
+function toLoginRes(usuario) {
+  if (!usuario) {
+    return null;
+  }
+
+  return {
+    id: usuario.id_usuario,
+    nome: usuario.nome,
+    login: usuario.login,
+    estrelas: usuario.qntd_estrelas,
+    createAt: usuario.createdAt,
+  };
 }
 
 module.exports = {
-    toLoginRes
+  toCadastroRes,
+  toLoginRes,
 };
