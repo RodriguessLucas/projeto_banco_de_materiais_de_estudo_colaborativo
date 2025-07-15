@@ -17,7 +17,6 @@ const swaggerOptions = {
           required: ['nome', 'email', 'login', 'senha'],
           properties: {
             nome: { type: 'string' },
-            email: { type: 'string', format: 'email' },
             login: { type: 'string' },
             senha: { type: 'string', format: 'password' },
           },
@@ -25,8 +24,8 @@ const swaggerOptions = {
         UsuarioDTO: {
           type: 'object',
           properties: {
-            nome: { type: 'string', example: 'Lucas Rodrigues' },
-            login: { type: 'string', example: 'lucas.teste@email.com' },
+            nome: { type: 'string'  },
+            login: { type: 'string' },
           }
         },
         // Schema para a RESPOSTA completa de sucesso
