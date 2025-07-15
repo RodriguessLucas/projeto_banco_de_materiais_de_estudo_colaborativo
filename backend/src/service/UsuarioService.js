@@ -14,15 +14,13 @@ class UsuarioService{
 
         const senhaHash = await bcrypt.hash(senha, 10);
 
-
         const novoUsuario = await Usuario.create({
             ...dadosUsuario,
             senha: senhaHash
         });
         
         const usuarioDTO = toCadastroRes(novoUsuario);
-        console.log(usuarioDTO);
-        
+
         const message = 'Usuário cadastrado com sucesso!';
         return {usuarioDTO, message};
 

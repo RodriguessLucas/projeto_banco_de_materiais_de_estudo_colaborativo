@@ -24,11 +24,7 @@ class AutenticacaoService{
             {expiresIn: '4h'}
         );
 
-        usuario.senha = undefined;
-
         const usuarioDTO = toLoginRes(usuario);
-
-
         return {usuarioDTO, token};
 
     }
