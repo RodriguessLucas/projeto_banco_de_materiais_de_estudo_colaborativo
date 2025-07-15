@@ -18,6 +18,8 @@ const swaggerOptions = {
         },
       },
       schemas: {
+        Usuario: {
+          type: "object",
 <<<<<<< HEAD
         // ========== SCHEMAS DE CADASTRO ==========
         UsuarioRequest: {
@@ -136,12 +138,16 @@ const swaggerOptions = {
     },
     paths: {
       "/cadastrarUsuario": {
+      "/cadastrarUsuario": {
         post: {
+          summary: "Cria um novo usuário",
+          tags: ["Usuários"],
           summary: "Cria um novo usuário",
           tags: ["Usuários"],
           requestBody: {
             required: true,
             content: {
+              "application/json": {
               "application/json": {
                 schema: {
 <<<<<<< HEAD
@@ -174,12 +180,16 @@ const swaggerOptions = {
         },
       },
       "/login": {
+      "/login": {
         post: {
+          summary: "Autentica um usuário e retorna um token",
+          tags: ["Usuários"],
           summary: "Autentica um usuário e retorna um token",
           tags: ["Usuários"],
           requestBody: {
             required: true,
             content: {
+              "application/json": {
               "application/json": {
                 schema: {
                   $ref: "#/components/schemas/LoginRequest",
@@ -191,6 +201,29 @@ const swaggerOptions = {
             200: {
               description: "Login bem-sucedido",
               content: {
+                "application/json": {
+                  schema: {
+                    $ref: "#/components/schemas/LoginResponse",
+                  },
+                },
+              },
+            },
+            401: {
+              description: "Não autorizado (e-mail ou senha inválidos)",
+            },
+          },
+        },
+      },
+      "/usuarios/perfil": {
+        get: {
+          summary: "Retorna o perfil do usuário autenticado",
+          tags: ["Usuários"],
+          security: [{ bearerAuth: [] }], // ✅ isso habilita o botão "Authorize"
+          responses: {
+            200: {
+              description: "Perfil do usuário autenticado",
+              content: {
+                "application/json": {
                 "application/json": {
                   schema: {
                     $ref: "#/components/schemas/LoginResponse",
@@ -241,3 +274,4 @@ const swaggerOptions = {
 };
 
 module.exports = swaggerOptions;
+
