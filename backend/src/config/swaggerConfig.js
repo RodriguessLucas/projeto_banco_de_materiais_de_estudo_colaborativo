@@ -18,7 +18,7 @@ const swaggerOptions = {
         },
       },
       schemas: {
-        // ========== SCHEMAS DE USUÁRIO ==========
+
         Usuario: {
           type: "object",
           properties: {
@@ -56,7 +56,7 @@ const swaggerOptions = {
           },
         },
 
-        // ========== SCHEMAS DE LOGIN ==========
+
         LoginRequest: {
           type: "object",
           required: ["login", "senha"],
