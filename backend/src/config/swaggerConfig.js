@@ -11,32 +11,64 @@ const swaggerOptions = {
     servers: [{ url: `http://localhost:${PORT}` }],
     components: {
       schemas: {
-
-        Usuario: {
+        // ========== SCHEMAS DE CADASTRO ==========
+        UsuarioRequest: {
           type: 'object',
-          required: ['nome', 'email', 'login', 'senha'],
+          required: ['nome', 'login', 'senha'],
           properties: {
-            nome: { type: 'string' },
-            login: { type: 'string' },
-            senha: { type: 'string', format: 'password' },
+            nome: { type: 'string', example: 'nome sobrenome' },
+            login: { type: 'string', example: 'teste@gmail.com' },
+            senha: { type: 'string', format: 'password', example: '123456' },
           },
         },
-        UsuarioDTO: {
+        CadastroUsuarioResponseDTO: {
           type: 'object',
           properties: {
-            nome: { type: 'string'  },
-            login: { type: 'string' },
+            nome: { type: 'string', example: 'nome sobrenome'  },
+            login: { type: 'string', example: 'teste@gmail.com' },
           }
         },
         RespostaUsuarioCriado: {
           type: 'object',
           properties: {
             usuarioDTO: {
-              $ref: '#/components/schemas/UsuarioDTO'
+              $ref: '#/components/schemas/CadastroUsuarioResponseDTO'
             },
             message: {
               type: 'string',
               example: 'Usuário cadastrado com sucesso!'
+            }
+          }
+        },
+
+        // ========== SCHEMAS DE LOGIN ==========
+        LoginRequest: {
+          type: 'object',
+          required: ['login', 'senha'],
+          properties: {
+            login: { type: 'string', example: 'teste@gmail.com' },
+            senha: { type: 'string', format: 'password', example: '123456' }
+          }
+        },
+        UsuarioDetalhadoDTO: {
+            type: 'object',
+            properties: {
+              id: { type: 'integer', example: 3 },
+              nome: { type: 'string', example: 'nome sobrenome' },
+              login: { type: 'string', example: 'teste@email.com' },
+              estrelas: { type: 'integer', example: 0 },
+              createAt: { type: 'string', format: 'date-time', example: '2025-07-15T17:03:43.052Z' }
+            }
+        },
+        LoginResponse: {
+          type: 'object',
+          properties: {
+            usuarioDTO: {
+              $ref: '#/components/schemas/UsuarioDetalhadoDTO'
+            },
+            token: {
+              type: 'string',
+              example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NTI1OTkwODksImV4cCI6MTc1MjYxMzQ4OX0.tj6kLAxz1l86IW76PUP6CFLKPVXn_QLTw3Ssasl2CdY'
             }
           }
         }
@@ -52,7 +84,7 @@ const swaggerOptions = {
             content: {
               'application/json': {
                 schema: {
-                  $ref: '#/components/schemas/Usuario',
+                  $ref: '#/components/schemas/UsuarioRequest', // Ajustado
                 },
               },
             },
@@ -98,7 +130,7 @@ const swaggerOptions = {
               }
             },
             '401': {
-              description: 'Não autorizado (e-mail ou senha inválidos)'
+              description: 'Não autorizado (login ou senha inválidos)'
             }
           }
         }
