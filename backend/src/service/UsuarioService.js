@@ -21,6 +21,8 @@ class UsuarioService{
         });
         
         const usuarioDTO = toCadastroRes(novoUsuario);
+        console.log(usuarioDTO);
+        
         const message = 'Usuário cadastrado com sucesso!';
         return {usuarioDTO, message};
 
