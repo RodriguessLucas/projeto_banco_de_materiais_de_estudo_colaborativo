@@ -15,11 +15,33 @@ const swaggerOptions = {
           type: 'object',
           properties: {
             nome: { type: 'string' },
-            email: { type: 'string' },
             login: { type: 'string' },
             senha: { type: 'string' },
           },
         },
+        LoginRequest: {
+          type: 'object',
+          properties: {
+            login: { type: 'string', example: 'exemplo@email.com' },
+            senha: { type: 'string', example: 'senha123' }
+          }
+        },
+        LoginResponse: {
+          type: 'object',
+          properties: {
+            usuario: {
+              type: 'object',
+              properties: {
+                id_usuario: { type: 'integer' },
+                nome: { type: 'string' },
+                login: { type: 'string' },
+                qntd_estrelas: {type: 'integer'},
+                criado : {type: 'date-time'}
+              }
+            },
+            token: { type: 'string' }
+          }
+        }
       },
     },
     paths: {
@@ -43,6 +65,37 @@ const swaggerOptions = {
           },
         },
       },
+      '/login': {
+        post: {
+          summary: 'Autentica um usuário e retorna um token',
+          tags: ['Usuários'],
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/LoginRequest' 
+                }
+              }
+            }
+          },
+          responses: {
+            '200': {
+              description: 'Login bem-sucedido',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/LoginResponse' 
+                  }
+                }
+              }
+            },
+            '401': {
+              description: 'Não autorizado (e-mail ou senha inválidos)'
+            }
+          }
+        }
+      }
     },
   },
   apis: [],
