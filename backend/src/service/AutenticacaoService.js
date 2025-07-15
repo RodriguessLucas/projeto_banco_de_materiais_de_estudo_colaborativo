@@ -3,6 +3,7 @@ const Usuario = require('../model/Usuario');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { where } = require('sequelize');
+const { toLoginRes } = require('../dto/UsuarioDTO');
 
 class AutenticacaoService{
     async login(login, senha){
@@ -24,10 +25,11 @@ class AutenticacaoService{
         );
 
         usuario.senha = undefined;
-
         console.log(usuario);
-        console.log(token);
-        return {usuario, token};
+        const usuarioDTO = toLoginRes(usuario);
+        console.log(usuarioDTO);
+
+        return {usuarioDTO, token};
 
     }
 

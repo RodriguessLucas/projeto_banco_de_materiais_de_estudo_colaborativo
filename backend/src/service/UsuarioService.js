@@ -13,10 +13,12 @@ class UsuarioService{
 
         const senhaHash = await bcrypt.hash(senha, 10);
 
+
         const novoUsuario = await Usuario.create({
             ...dadosUsuario,
             senha: senhaHash
         });
+
 
         novoUsuario.senha = undefined;
         return novoUsuario;
