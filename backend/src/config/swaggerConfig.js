@@ -34,7 +34,9 @@ const swaggerOptions = {
               properties: {
                 id_usuario: { type: 'integer' },
                 nome: { type: 'string' },
-                login: { type: 'string' }
+                login: { type: 'string' },
+                qntd_estrelas: {type: 'integer'},
+                criado : {type: 'date-time'}
               }
             },
             token: { type: 'string' }

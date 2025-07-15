@@ -25,9 +25,9 @@ class AutenticacaoService{
         );
 
         usuario.senha = undefined;
-        console.log(usuario);
+
         const usuarioDTO = toLoginRes(usuario);
-        console.log(usuarioDTO);
+
 
         return {usuarioDTO, token};
 
