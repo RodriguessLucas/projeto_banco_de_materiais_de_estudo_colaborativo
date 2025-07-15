@@ -1,4 +1,4 @@
-const PORT = process.env.PORT || 5555;
+const PORT = 5555;
 
 const swaggerOptions = {
   definition: {
@@ -11,15 +11,37 @@ const swaggerOptions = {
     servers: [{ url: `http://localhost:${PORT}` }],
     components: {
       schemas: {
+
         Usuario: {
           type: 'object',
+          required: ['nome', 'email', 'login', 'senha'],
           properties: {
             nome: { type: 'string' },
-            email: { type: 'string' },
+            email: { type: 'string', format: 'email' },
             login: { type: 'string' },
-            senha: { type: 'string' },
+            senha: { type: 'string', format: 'password' },
           },
         },
+        UsuarioDTO: {
+          type: 'object',
+          properties: {
+            nome: { type: 'string', example: 'Lucas Rodrigues' },
+            login: { type: 'string', example: 'lucas.teste@email.com' },
+          }
+        },
+        // Schema para a RESPOSTA completa de sucesso
+        RespostaUsuarioCriado: {
+          type: 'object',
+          properties: {
+            usuarioDTO: {
+              $ref: '#/components/schemas/UsuarioDTO'
+            },
+            message: {
+              type: 'string',
+              example: 'Usuário cadastrado com sucesso!'
+            }
+          }
+        }
       },
     },
     paths: {
@@ -38,7 +60,16 @@ const swaggerOptions = {
             },
           },
           responses: {
-            '201': { description: 'Usuário criado com sucesso' },
+            '201': {
+              description: 'Usuário criado com sucesso',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/RespostaUsuarioCriado',
+                  },
+                },
+              },
+            },
             '400': { description: 'Erro na requisição' },
           },
         },
