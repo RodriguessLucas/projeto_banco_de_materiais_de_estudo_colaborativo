@@ -19,7 +19,7 @@ class MaterialController{
             if(error instanceof multer.MulterError){
                 return res.status(400).json({message:`Erro no upload do arquivo: ${error.message}`});
             }
-            return res.status(400).join({message: error.message});
+            return res.status(400).json({message: error.message});
         }
     }
 }
