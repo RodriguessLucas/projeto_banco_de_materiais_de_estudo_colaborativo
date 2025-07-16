@@ -1,3 +1,4 @@
+const multer = require('multer');
 const MaterialService = require('../service/MaterialService');
 
 class MaterialController{
@@ -15,6 +16,9 @@ class MaterialController{
             return res.status(201).json(material);
         }
         catch(error){
+            if(error instanceof multer.MulterError){
+                return res.status(400).json({message:`Erro no upload do arquivo: ${error.message}`});
+            }
             return res.status(400).join({message: error.message});
         }
     }
