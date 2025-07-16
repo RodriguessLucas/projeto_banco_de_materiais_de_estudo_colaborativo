@@ -33,6 +33,12 @@ class Material extends Model{
                 allowNull: false,
                 defaultValue: 'generico',
             },
+            
+            nome_professor: {
+                type: DataTypes.STRING,
+                allowNull: true,
+                defaultValue: 'generico',
+            },
 
             descricao_material : {
                 type: DataTypes.STRING,
