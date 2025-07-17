@@ -37,6 +37,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    volumes:
+      - ./uploads:/usr/src/app/uploads
 
 volumes:
   postgres_data:
