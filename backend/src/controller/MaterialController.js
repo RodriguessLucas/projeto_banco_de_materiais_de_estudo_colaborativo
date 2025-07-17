@@ -4,7 +4,7 @@ const MaterialService = require('../service/MaterialService');
 class MaterialController{
     async criar(req, res){
         try{
-            const idUsuarioAut = req.user.id;
+            const idUsuarioAut = req.userId; 
 
             const dadosParaSalvar = {
                 ...req.body,

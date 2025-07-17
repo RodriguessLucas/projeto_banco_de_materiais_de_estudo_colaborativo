@@ -12,7 +12,8 @@ const upload = multer(uploadConfig);
 
 routes.post('/cadastrarUsuario', UsuarioController.criar);
 routes.post('/login', AutenticacaoController.login);
-routes.post('/usuario/cadastrarMateriais', upload.single('arquivo'), MaterialController.criar);
+routes.post('/usuario/cadastrarMateriais', autenticar, upload.single('arquivo'), MaterialController.criar);
+// deu erro aqui, e tem q verificar com testes se da tudo certo, pois ta dando token invalido
 
 routes.get('/usuarios/perfil', autenticar, UsuarioController.meuPerfil);
 
