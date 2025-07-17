@@ -9,6 +9,16 @@ const swaggerOptions = {
       description: "Documentação da API",
     },
     servers: [{ url: `http://localhost:${PORT}` }],
+    tags: [
+      {
+        name: "Usuários",
+        description: "Endpoints para login e cadastro de usuários",
+      },
+      {
+        name: "Materiais",
+        description: "Endpoints para gerenciamento de materiais de estudo",
+      },
+    ],
     components: {
       securitySchemes: {
         bearerAuth: {
@@ -114,6 +124,23 @@ const swaggerOptions = {
             },
           },
         },
+        MaterialResponse: {
+          type: "object",
+          properties: {
+            id: { type: "integer", example: 1 },
+            nome_material: { type: "string", example: "Resumo de Cálculo I" },
+            descricao_material: { type: "string", example: "Material focado em limites." },
+            id_materia: { type: "integer", example: 1 },
+            id_usuario: { type: "integer", example: 1 },
+            caminho_arquivo: { type: "string", example: "1a2b3c4d-Resumo.pdf" },
+            instituicao: { type: "string", example: "UFC" },
+            curso: { type: "string", example: "Ciência da Computação" },
+            nome_professor: { type: "string", example: "Prof. Nélio" },
+            qntd_estrela: { type: "integer", example: 0 },
+            createdAt: { type: "string", format: "date-time" },
+            updatedAt: { type: "string", format: "date-time" },
+          },
+        },
       },
     },
     paths: {
@@ -198,6 +225,51 @@ const swaggerOptions = {
             401: {
               description: "Token JWT ausente ou inválido",
             },
+          },
+        },
+      },
+        "/usuario/cadastrarMateriais": {
+        post: {
+          summary: "Faz o upload de um novo material de estudo",
+          tags: ["Materiais"],
+          security: [{ bearerAuth: [] }],
+          requestBody: {
+            required: true,
+            content: {
+              "multipart/form-data": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    arquivo: {
+                      type: "string",
+                      format: "binary",
+                      description: "O arquivo a ser enviado (PDF, DOCX, PNG, etc.)",
+                    },
+                    nome_material: { type: "string" },
+                    id_materia: { type: "integer" },
+                    descricao_material: { type: "string" },
+                    instituicao: { type: "string" },
+                    curso: { type: "string" },
+                    nome_professor: { type: "string" },
+                  },
+                  required: ["arquivo", "nome_material", "id_materia"],
+                },
+              },
+            },
+          },
+          responses: {
+            201: {
+              description: "Material enviado com sucesso",
+              content: {
+                "application/json": {
+                  schema: {
+                    $ref: "#/components/schemas/MaterialResponse",
+                  },
+                },
+              },
+            },
+            400: { description: "Requisição inválida ou tipo de arquivo não suportado" },
+            401: { description: "Não autorizado (token inválido ou não fornecido)" },
           },
         },
       },
