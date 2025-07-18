@@ -48,10 +48,6 @@ def gerarListaClasulasPeloMenosUm(dicionarioClasulas):
    return listaClasulas
 
 
-
-
-
-
 #arrumar o de ser p ^ -p 
 def gerarListaClasulasSoPodeUm(dicionarioClasulas):
    listaClasulas = []
