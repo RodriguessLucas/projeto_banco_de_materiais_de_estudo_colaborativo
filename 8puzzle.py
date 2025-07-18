@@ -69,10 +69,6 @@ def gerarListaClasulasSoPodeUm(dicionarioClasulas):
 
 
 
-
-
-
-
 # funcao auxiliar
 
 def imprimir_dicionario_linha_a_linha(meu_dicionario):
