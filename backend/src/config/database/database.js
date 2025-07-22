@@ -18,8 +18,16 @@ let dbConfig;
 // O 'if' verifica se estamos no ambiente do Render.
 if (process.env.DATABASE_URL) {
   // Se estivermos no Render, usamos a DATABASE_URL.
+  // CORREÇÃO: Vamos extrair as partes da URL manualmente para garantir a conexão.
+  const dbUrl = new URL(process.env.DATABASE_URL);
+
   dbConfig = {
     ...baseConfig,
+    host: dbUrl.hostname,
+    port: dbUrl.port,
+    database: dbUrl.pathname.substring(1), // Remove a barra inicial do nome do banco
+    username: dbUrl.username,
+    password: dbUrl.password,
     // As opções de SSL são OBRIGATÓRIAS para a conexão segura no Render.
     dialectOptions: {
       ssl: {
@@ -28,8 +36,6 @@ if (process.env.DATABASE_URL) {
       },
     },
   };
-  // O Sequelize é inteligente e usará a variável de ambiente DATABASE_URL
-  // se nenhuma outra credencial for fornecida.
 } else {
   // Se a DATABASE_URL não existir, significa que estamos no ambiente local.
   // Neste caso, usamos as variáveis do seu ficheiro .env.
