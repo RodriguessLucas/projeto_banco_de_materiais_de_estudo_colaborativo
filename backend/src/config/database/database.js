@@ -4,7 +4,7 @@ require('dotenv').config();
 
 // Configuração base que será usada em ambos os ambientes
 const baseConfig = {
-  dialect: 'postgres', // Define o dialect aqui para garantir que nunca falte
+  dialect: 'postgres',
   logging: false,
   define: {
     timestamps: true,
@@ -16,8 +16,16 @@ let dbConfig;
 
 // Verifica se está no ambiente de produção (Render) que fornece a DATABASE_URL
 if (process.env.DATABASE_URL) {
+  // CORREÇÃO: Usamos a classe URL para extrair as partes da connection string
+  const dbUrl = new URL(process.env.DATABASE_URL);
+
   dbConfig = {
     ...baseConfig,
+    host: dbUrl.hostname,
+    port: dbUrl.port,
+    database: dbUrl.pathname.substring(1), // Remove a barra inicial do nome do banco
+    username: dbUrl.username,
+    password: dbUrl.password,
     // Adiciona as opções de SSL necessárias para o Render
     dialectOptions: {
       ssl: {
@@ -26,7 +34,6 @@ if (process.env.DATABASE_URL) {
       },
     },
   };
-  // O Sequelize vai usar a DATABASE_URL automaticamente se ela estiver no ambiente
 } else {
   // Configuração para o ambiente local (docker-compose)
   dbConfig = {
