@@ -18,10 +18,29 @@ function toLoginRes(usuario) {
     id: usuario.id_usuario,
     nome: usuario.nome,
     login: usuario.login,
+    curso: usuario.curso,
+    universidade: usuario.universidade,
     estrelas: usuario.qntd_estrelas,
-    createAt: usuario.createdAt,
   };
 }
+function toPerfilRes(usuario) {
+  if (!usuario) return null;
+
+  return {
+    id: usuario.id_usuario,
+    nome: usuario.nome,
+    login: usuario.login,
+    curso: usuario.curso,
+    universidade: usuario.universidade,
+    estrelas: usuario.qntd_estrelas,
+  };
+}
+
+module.exports = {
+  toCadastroRes,
+  toLoginRes,
+  toPerfilRes,
+};
 
 module.exports = {
   toCadastroRes,
