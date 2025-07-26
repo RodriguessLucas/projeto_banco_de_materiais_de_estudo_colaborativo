@@ -23,6 +23,19 @@ class MaterialService{
         return caminhoArquivo
 
     }
+    async buscarMateriais(palavraChave) {
+        const materiais = await Material.findAll({
+            where: {
+                [Op.or]: [
+                    { nome_material: { [Op.iLike]: `%${palavraChave}%` } },
+                    { descricao_material: { [Op.iLike]: `%${palavraChave}%` } },
+                    { nome_professor: { [Op.iLike]: `%${palavraChave}%` } }
+                ]
+            }
+        });
+
+        return materiais;
+    }
 
 }
 

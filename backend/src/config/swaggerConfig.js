@@ -311,9 +311,14 @@ const swaggerOptions = {
                   },
                 },
               },
-            },            
-            400: { description: "Requisição inválida ou tipo de arquivo não suportado" },
-            401: { description: "Não autorizado (token inválido ou não fornecido)" },
+            },
+            400: {
+              description:
+                "Requisição inválida ou tipo de arquivo não suportado",
+            },
+            401: {
+              description: "Não autorizado (token inválido ou não fornecido)",
+            },
           },
         },
       },
@@ -346,8 +351,51 @@ const swaggerOptions = {
                 },
               },
             },
-            401: { description: "Não autorizado (token inválido ou não fornecido)" },
+            401: {
+              description: "Não autorizado (token inválido ou não fornecido)",
+            },
             404: { description: "Material não encontrado" },
+          },
+        },
+      },
+      "/materiais/buscar": {
+        get: {
+          summary: "Busca materiais por palavras-chave",
+          description:
+            "Retorna uma lista de materiais cujo nome, descrição ou nome do professor contenham a palavra-chave informada.",
+          tags: ["Materiais"],
+          parameters: [
+            {
+              name: "q",
+              in: "query",
+              required: true,
+              description:
+                "Palavra-chave para busca (ex: 'prova de cálculo', 'lista de lógica')",
+              schema: {
+                type: "string",
+              },
+            },
+          ],
+          responses: {
+            200: {
+              description: "Lista de materiais encontrados",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: {
+                      $ref: "#/components/schemas/MaterialResponse",
+                    },
+                  },
+                },
+              },
+            },
+            400: {
+              description: "Palavra-chave não informada na query",
+            },
+            500: {
+              description: "Erro interno ao processar a busca",
+            },
           },
         },
       },

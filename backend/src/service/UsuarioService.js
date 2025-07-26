@@ -38,6 +38,7 @@ class UsuarioService {
     }
 
     return usuario;
+
   }
 
   async atualizarPerfil(id_usuario, novosDados) {

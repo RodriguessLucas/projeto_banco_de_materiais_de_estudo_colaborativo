@@ -20,6 +20,9 @@ routes.get('/usuarios/perfil', autenticar, UsuarioController.meuPerfil);
 routes.put("/usuarios/perfil", autenticar, UsuarioController.atualizarPerfil);
 
 routes.get('/materiais/:id/download', autenticar, MaterialController.download);
+routes.get('/materiais/buscar', MaterialController.buscar);
+
+
 module.exports = routes;
 
 
