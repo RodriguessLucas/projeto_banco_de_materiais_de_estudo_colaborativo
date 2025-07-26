@@ -252,7 +252,6 @@ const swaggerOptions = {
                     curso: { type: "string" },
                     nome_professor: { type: "string" },
                   },
-                  required: ["arquivo", "nome_material", "id_materia"],
                 },
               },
             },
@@ -268,8 +267,43 @@ const swaggerOptions = {
                 },
               },
             },
+            
             400: { description: "Requisição inválida ou tipo de arquivo não suportado" },
             401: { description: "Não autorizado (token inválido ou não fornecido)" },
+          },
+        },
+      },
+
+      "/materiais/{id}/download": {
+        get: {
+          summary: "Realiza o download de um material específico",
+          tags: ["Materiais"],
+          security: [{ bearerAuth: [] }],
+          parameters: [
+            {
+              name: "id",
+              in: "path",
+              required: true,
+              description: "O ID do material para fazer o download.",
+              schema: {
+                type: "integer",
+              },
+            },
+          ],
+          responses: {
+            200: {
+              description: "Arquivo do material retornado com sucesso.",
+              content: {
+                "application/octet-stream": {
+                  schema: {
+                    type: "string",
+                    format: "binary",
+                  },
+                },
+              },
+            },
+            401: { description: "Não autorizado (token inválido ou não fornecido)" },
+            404: { description: "Material não encontrado" },
           },
         },
       },
