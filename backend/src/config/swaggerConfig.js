@@ -8,7 +8,7 @@ const swaggerOptions = {
       version: "1.0.0",
       description: "Documentação da API",
     },
-    servers: [{ url: `http://localhost:${PORT}` }],
+    servers: [{ url: `https://projeto-banco-de-materiais-de-estudo.onrender.com` }],
     tags: [
       {
         name: "Usuários",
