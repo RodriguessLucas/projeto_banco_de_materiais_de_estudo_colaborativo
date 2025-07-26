@@ -28,7 +28,6 @@ const swaggerOptions = {
         },
       },
       schemas: {
-
         Usuario: {
           type: "object",
           properties: {
@@ -66,13 +65,20 @@ const swaggerOptions = {
           },
         },
 
-
         LoginRequest: {
           type: "object",
           required: ["login", "senha"],
           properties: {
             login: { type: "string", example: "teste@gmail.com" },
             senha: { type: "string", format: "password", example: "123456" },
+          },
+        },
+        AtualizarPerfilRequest: {
+          type: "object",
+          properties: {
+            nome: { type: "string", example: "Fulano da Silva" },
+            curso: { type: "string", example: "Sistemas de Informação" },
+            universidade: { type: "string", example: "UFC" },
           },
         },
         UsuarioDetalhadoDTO: {
@@ -108,6 +114,8 @@ const swaggerOptions = {
             id_usuario: { type: "integer", example: 1 },
             nome: { type: "string", example: "Fulano da Silva" },
             login: { type: "string", example: "fulano@email.com" },
+            curso: { type: "string", example: "Sistemas de Informação" },
+            universidade: { type: "string", example: "UFC" },
             qntd_estrelas: { type: "integer", example: 10 },
             materiais_criados: {
               type: "array",
@@ -129,7 +137,10 @@ const swaggerOptions = {
           properties: {
             id: { type: "integer", example: 1 },
             nome_material: { type: "string", example: "Resumo de Cálculo I" },
-            descricao_material: { type: "string", example: "Material focado em limites." },
+            descricao_material: {
+              type: "string",
+              example: "Material focado em limites.",
+            },
             id_materia: { type: "integer", example: 1 },
             id_usuario: { type: "integer", example: 1 },
             caminho_arquivo: { type: "string", example: "1a2b3c4d-Resumo.pdf" },
@@ -227,8 +238,41 @@ const swaggerOptions = {
             },
           },
         },
+        put: {
+          summary: "Atualiza o perfil do usuário autenticado",
+          tags: ["Usuários"],
+          security: [{ bearerAuth: [] }],
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/AtualizarPerfilRequest",
+                },
+              },
+            },
+          },
+          responses: {
+            200: {
+              description: "Perfil atualizado com sucesso",
+              content: {
+                "application/json": {
+                  schema: {
+                    $ref: "#/components/schemas/PerfilUsuarioResponse",
+                  },
+                },
+              },
+            },
+            400: {
+              description: "Erro na requisição (ex: campos inválidos)",
+            },
+            401: {
+              description: "Token JWT ausente ou inválido",
+            },
+          },
+        },
       },
-        "/usuario/cadastrarMateriais": {
+      "/usuario/cadastrarMateriais": {
         post: {
           summary: "Faz o upload de um novo material de estudo",
           tags: ["Materiais"],
@@ -243,7 +287,8 @@ const swaggerOptions = {
                     arquivo: {
                       type: "string",
                       format: "binary",
-                      description: "O arquivo a ser enviado (PDF, DOCX, PNG, etc.)",
+                      description:
+                        "O arquivo a ser enviado (PDF, DOCX, PNG, etc.)",
                     },
                     nome_material: { type: "string" },
                     id_materia: { type: "integer" },
@@ -252,7 +297,6 @@ const swaggerOptions = {
                     curso: { type: "string" },
                     nome_professor: { type: "string" },
                   },
-                  required: ["arquivo", "nome_material", "id_materia"],
                 },
               },
             },
@@ -267,9 +311,43 @@ const swaggerOptions = {
                   },
                 },
               },
-            },
+            },            
             400: { description: "Requisição inválida ou tipo de arquivo não suportado" },
             401: { description: "Não autorizado (token inválido ou não fornecido)" },
+          },
+        },
+      },
+
+      "/materiais/{id}/download": {
+        get: {
+          summary: "Realiza o download de um material específico",
+          tags: ["Materiais"],
+          security: [{ bearerAuth: [] }],
+          parameters: [
+            {
+              name: "id",
+              in: "path",
+              required: true,
+              description: "O ID do material para fazer o download.",
+              schema: {
+                type: "integer",
+              },
+            },
+          ],
+          responses: {
+            200: {
+              description: "Arquivo do material retornado com sucesso.",
+              content: {
+                "application/octet-stream": {
+                  schema: {
+                    type: "string",
+                    format: "binary",
+                  },
+                },
+              },
+            },
+            401: { description: "Não autorizado (token inválido ou não fornecido)" },
+            404: { description: "Material não encontrado" },
           },
         },
       },
