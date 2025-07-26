@@ -12,6 +12,14 @@ class Usuario extends Model {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        curso: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        universidade: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
         login: {
             type: DataTypes.STRING,
             allowNull: false,
