@@ -19,6 +19,7 @@ routes.post('/usuario/cadastrarMateriais', autenticar, upload.single('arquivo'),
 routes.get('/usuarios/perfil', autenticar, UsuarioController.meuPerfil);
 routes.put("/usuarios/perfil", autenticar, UsuarioController.atualizarPerfil);
 
+routes.get('/materiais/:id/download', autenticar, MaterialController.download);
 module.exports = routes;
 
 
