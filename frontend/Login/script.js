@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // Definindo a URL da API aqui para testes locais
-    const API_URL = 'http://localhost:5555';
+    const API_BASE_URL = 'http://localhost:5555';
 
     // Selecionando os elementos do HTML
     const loginForm = document.getElementById("login-form");
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // Requisição para a API
-            const response = await fetch(`${API_URL}/login`, {
+            const response = await fetch(`${API_BASE_URL}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
