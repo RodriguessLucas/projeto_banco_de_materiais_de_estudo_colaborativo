@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Nome do Site</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <h1>NOME DO SITE</h1>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h2>CADASTRO</h2>
+            <form id="register-form">
+                <input type="text" id="name" class="form-input" placeholder="Nome:" required>
+                <input type="email" id="email" class="form-input" placeholder="Email:" required>
+                <input type="number" id="age" class="form-input" placeholder="Idade:" required>
+                <input type="password" id="password" class="form-input" placeholder="Senha:" required>
+                
+                <div class="button-group">
+                    <a href="index.html" class="btn btn-danger">Descartar</a>
+                    <button type="reset" class="btn btn-warning">Limpar</button>
+                    <button type="submit" class="btn btn-primary">Cadastrar!</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer"></footer>
+    <script src="js/auth.js"></script>
+</body>
+</html>
