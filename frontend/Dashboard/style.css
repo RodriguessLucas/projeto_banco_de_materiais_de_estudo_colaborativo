@@ -1,0 +1,121 @@
+/* /Dashboard/style.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e0e0e0; /* Fundo cinza claro */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header, .footer {
+    background-color: #3b3b98; /* Azul escuro do tema */
+    color: white;
+    padding: 1rem 5%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.site-title {
+    font-size: 2rem;
+    font-family: 'Serif', 'Times New Roman';
+}
+
+.user-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.profile-icon {
+    background-color: white;
+    color: #3b3b98;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.user-profile span {
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 2rem 10%;
+}
+
+.info-section {
+    margin-bottom: 2rem;
+}
+
+.search-bar {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 15px 20px;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.search-bar .fa-search {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.materials-grid {
+    display: grid;
+    /* Cria colunas responsivas: tenta encaixar o máximo de cards de 220px */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 2rem;
+    text-align: center;
+}
+
+.material-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden; /* Garante que a imagem não saia do card */
+    display: flex;
+    flex-direction: column;
+}
+
+.material-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover; /* Faz a imagem cobrir o espaço sem distorcer */
+    background-color: #f0f0f0;
+}
+
+.material-card .card-title {
+    background-color: #3b3b98;
+    color: white;
+    padding: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.footer {
+    min-height: 50px;
+}
+
+body { margin: 0; font-family: sans-serif; }
+.topo { background-color: #005bbf; color: white; padding: 10px 20px; font-weight: bold; text-align: center; }
+.cinza { background-color: #d9d9d9; min-height: 100vh; }
+.centralizar { display: flex; justify-content: center; align-items: center; }

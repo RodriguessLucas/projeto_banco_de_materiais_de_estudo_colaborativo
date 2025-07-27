@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Redireciona para a página do dashboard após o login
                 setTimeout(() => {
-                    window.location.href = "../Dashboard/dashboard.html";
+                    window.location.href = "../dashboard.html";
                 }, 1000);
             } else {
                 msg.style.color = "red";
