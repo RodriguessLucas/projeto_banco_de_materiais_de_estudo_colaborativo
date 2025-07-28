@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 feedbackMessage.textContent = data.message || "Cadastro realizado com sucesso! Redirecionando...";
                 feedbackMessage.classList.add('success');
                 setTimeout(() => {
-                    window.location.href = '../login.html'; 
+                    window.location.href = './login.html'; 
                 }, 2000);
             } else {
                 throw new Error(data.message || 'Ocorreu um erro no cadastro.');

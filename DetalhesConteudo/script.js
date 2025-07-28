@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Botão "Descartar" pede confirmação e redireciona
     discardButton.addEventListener('click', () => {
         if (confirm('Tem certeza que deseja descartar e voltar para a página inicial?')) {
-            window.location.href = 'home.html';
+            window.location.href = './home.html';
         }
     });
 
