@@ -41,17 +41,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
 
             if (response.ok) {
-                msg.style.color = "green";
-                msg.textContent = "Login bem-sucedido! Redirecionando...";
+                if (data && data.usuarioDTO && data.usuarioDTO.nome) {
+                    msg.style.color = "green";
+                    msg.textContent = "Login bem-sucedido! Redirecionando...";
 
-                localStorage.setItem('authToken', data.token);
-                localStorage.setItem('userName', data.usuarioDTO.name);
-                localStorage.setItem('userId', data.usuarioDTO.id);
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('userName', data.usuarioDTO.nome); 
+                    localStorage.setItem('userId', data.usuarioDTO.id);
 
-               
-                setTimeout(() => {
-                    window.location.href = "./dashboard.html";
-                }, 1000);
+                    setTimeout(() => {
+                        window.location.href = "./home.html"; 
+                    }, 1000);
+                } else {
+                    throw new Error("A resposta do servidor não continha os dados do usuário.");
+                }
             } else {
                 msg.style.color = "red";
                 msg.textContent = data.message || "Email ou senha inválidos.";

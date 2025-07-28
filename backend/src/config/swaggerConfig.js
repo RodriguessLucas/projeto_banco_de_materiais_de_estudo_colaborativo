@@ -323,6 +323,41 @@ const swaggerOptions = {
           },
         },
       },
+      "/materias": {
+        post: {
+          summary: "Encontra uma matéria ou a cria se não existir",
+          tags: ["Materiais"],
+          security: [{ bearerAuth: [] }],
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    nome_materia: {
+                      type: "string",
+                      example: "Cálculo I"
+                    },
+                    nome_categoria: {
+                      type: "string",
+                      description: "Opcional. Se não for enviado, a matéria será associada a uma categoria 'Genérico'.",
+                      example: "Engenharia"
+                    }
+                  },
+                  required: ["nome_materia"]
+                }
+              }
+            }
+          },
+          responses: {
+            '200': { description: "Matéria encontrada com sucesso" },
+            '201': { description: "Matéria criada com sucesso" },
+            '400': { description: "Dados obrigatórios não fornecidos" },
+            '401': { description: "Não autorizado" }
+          }
+        }
+      },
     },
   },
   apis: [],
