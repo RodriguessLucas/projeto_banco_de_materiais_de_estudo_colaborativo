@@ -18,8 +18,6 @@ function toLoginRes(usuario) {
     id: usuario.id_usuario,
     nome: usuario.nome,
     login: usuario.login,
-    curso: usuario.curso,
-    universidade: usuario.universidade,
     estrelas: usuario.qntd_estrelas,
   };
 }
@@ -30,8 +28,6 @@ function toPerfilRes(usuario) {
     id: usuario.id_usuario,
     nome: usuario.nome,
     login: usuario.login,
-    curso: usuario.curso,
-    universidade: usuario.universidade,
     estrelas: usuario.qntd_estrelas,
   };
 }

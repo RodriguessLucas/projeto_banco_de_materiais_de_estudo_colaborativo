@@ -1,31 +1,38 @@
-// /Configuracao/script.js
+// /Dashboard/script.js
 
 document.addEventListener('DOMContentLoaded', () => {
     // ---- CONFIGURAÇÃO E SEGURANÇA ----
     const API_URL = 'http://localhost:5555';
     const token = localStorage.getItem('authToken');
-    const userId = localStorage.getItem('userId');
 
-    // Proteção de Rota: Se não houver token ou ID, volta para o login.
-    if (!token || !userId) {
+    // Se não houver token, o usuário não está logado. Redireciona para o login.
+    if (!token) {
         window.location.href = '../Login/login.html';
         return;
     }
 
     // ---- ELEMENTOS DA PÁGINA ----
-    const configForm = document.getElementById('config-form');
-    const nameInput = document.getElementById('user-name');
-    const emailInput = document.getElementById('user-email');
-    const passwordInput = document.getElementById('user-password');
-    const saveButton = configForm.querySelector('button');
+    const userNameDisplay = document.getElementById('user-name-display');
+    const userProfile = document.getElementById('user-profile');
+    const materialsGrid = document.getElementById('materials-grid');
 
     // ---- LÓGICA DA PÁGINA ----
 
-    // 1. Função para carregar os dados do usuário e preencher o formulário
-    async function loadUserData() {
+    // 1. Exibir nome do usuário e configurar o link para as configurações
+    const userName = localStorage.getItem('userName');
+    if (userName) {
+        userNameDisplay.textContent = userName;
+    }
+    
+    userProfile.addEventListener('click', () => {
+        // Leva para a página de configurações ao clicar
+        window.location.href = '../Configuracao/configuracoes.html';
+    });
+
+    // 2. Função para buscar e renderizar os materiais na tela
+    async function fetchAndRenderMaterials() {
         try {
-            // Busca os dados do perfil do usuário na API
-            const response = await fetch(`${API_URL}/user/${userId}`, {
+            const response = await fetch(`${API_URL}/materiais`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -33,72 +40,42 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (!response.ok) {
-                throw new Error('Não foi possível carregar os dados do perfil.');
+                // Se o token for inválido, redireciona para o login
+                if (response.status === 401 || response.status === 403) {
+                    localStorage.clear();
+                    window.location.href = '../Login/login.html';
+                }
+                throw new Error('Falha ao buscar materiais.');
             }
 
-            const userData = await response.json();
+            const materials = await response.json();
+            
+            // Limpa a mensagem "Carregando..."
+            materialsGrid.innerHTML = ''; 
 
-            // Preenche os campos do formulário com os dados recebidos
-            nameInput.value = userData.name;
-            emailInput.value = userData.email;
+            if (materials.length === 0) {
+                materialsGrid.innerHTML = '<p style="text-align: center;">Nenhum material compartilhado no momento.</p>';
+                return;
+            }
 
+            // Exibe os materiais recebidos
+            materials.forEach(material => {
+                const card = document.createElement('div');
+                card.className = 'material-card'; // Adicione estilos para esta classe no seu CSS
+                
+                card.innerHTML = `
+                    <img src="https://via.placeholder.com/220x150.png?text=Preview" alt="Preview do Material">
+                    <div class="card-title">${material.title}</div>
+                `;
+                materialsGrid.appendChild(card);
+            });
+            
         } catch (error) {
             console.error(error);
-            alert(error.message);
+            materialsGrid.innerHTML = '<p style="text-align: center; color: red;">Ocorreu um erro ao carregar os materiais.</p>';
         }
     }
 
-    // 2. Evento para salvar as alterações do formulário
-    configForm.addEventListener('submit', async (event) => {
-        event.preventDefault(); // Impede o recarregamento da página
-
-        const originalButtonText = saveButton.textContent;
-        saveButton.textContent = 'Salvando...';
-        saveButton.disabled = true;
-
-        // Monta o objeto 'payload' apenas com os dados que serão atualizados
-        const payload = {
-            name: nameInput.value,
-            email: emailInput.value,
-        };
-
-        // Apenas adiciona a senha ao payload se o usuário tiver digitado algo
-        if (passwordInput.value) {
-            payload.password = passwordInput.value;
-        }
-
-        try {
-            // Envia os dados para a API para atualização (método PUT)
-            const response = await fetch(`${API_URL}/user/${userId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(payload)
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Não foi possível salvar as alterações.');
-            }
-
-            const updatedUser = await response.json();
-            
-            // Atualiza o nome do usuário no localStorage para refletir a mudança no dashboard
-            localStorage.setItem('userName', updatedUser.name);
-
-            alert('Alterações salvas com sucesso!');
-
-        } catch (error) {
-            console.error(error);
-            alert(error.message);
-        } finally {
-            saveButton.textContent = originalButtonText;
-            saveButton.disabled = false;
-        }
-    });
-
-    // Inicia a página carregando os dados do usuário
-    loadUserData();
+    // 3. Inicia a busca pelos materiais assim que a página carrega
+    fetchAndRenderMaterials();
 });
