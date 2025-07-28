@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const API_BASE_URL = 'https://projeto-banco-de-materiais-de-estudo.onrender.com';
     // --- Seleção de Elementos do DOM ---
     const usernameDisplay = document.getElementById('username-display');
     const userAvatar = document.getElementById('user-avatar');

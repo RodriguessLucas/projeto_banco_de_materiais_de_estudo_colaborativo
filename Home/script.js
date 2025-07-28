@@ -1,5 +1,4 @@
 // Funções do menu lateral
-import { API_BASE_URL } from "../config";
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
 }
@@ -8,6 +7,7 @@ function closeNav() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    const API_BASE_URL = 'https://projeto-banco-de-materiais-de-estudo.onrender.com';
     
     const token = localStorage.getItem('authToken');
 

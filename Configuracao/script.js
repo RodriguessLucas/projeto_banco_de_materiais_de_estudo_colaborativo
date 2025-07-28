@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const API_BASE_URL = 'https://projeto-banco-de-materiais-de-estudo.onrender.com';
     const profileForm = document.getElementById('profileForm');
     const nameInput = document.getElementById('name');
     const nameError = document.getElementById('nameError');

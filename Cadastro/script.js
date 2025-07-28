@@ -1,6 +1,6 @@
-import { API_BASE_URL } from "../config";
 
 document.addEventListener('DOMContentLoaded', () => {
+    const API_BASE_URL = 'https://projeto-banco-de-materiais-de-estudo.onrender.com';
 
     const cadastroForm = document.getElementById('cadastroForm');
     const nomeCompletoInput = document.getElementById('nomeCompleto');

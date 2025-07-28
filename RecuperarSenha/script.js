@@ -1,3 +1,5 @@
+const API_BASE_URL = 'https://projeto-banco-de-materiais-de-estudo.onrender.com';
+
 document.addEventListener('DOMContentLoaded', () => {
     const recoveryForm = document.getElementById('recoveryForm');
     const emailInput = document.getElementById('email');
