@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Conteúdo - StudyShare</title>
+    <link rel="stylesheet" href="AdicionarConteudo/style.css"> 
+</head>
+<body>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="perfil.html">Perfil</a>
+        <a href="adicionar-conteudo.html">Adicionar Conteúdo</a>
+        <a href="configuracoes.html">Configurações</a>
+        <a href="login.html">Sair</a>
+    </div>
+    <div class="header topo"> <h1>StudyShare - Compartilhando Estudos</h1>
+        <div class="user-info">
+            <a href="#" class="user-profile-link" onclick="openNav()">
+              <img id="user-avatar" src="img/usuario.png" alt="Avatar do Usuário" class="user-avatar">
+              <span id="username-display" class="username-display">Usuário Padrão</span>
+            </a>
+        </div>
+    </div>
+    <div class="main-content centralizar"> <div class="search-bar">
+            <input type="text" placeholder="Buscar..." class="search-input">
+        </div>
+        <div class="container">
+            <div class="card">
+                <h2>ADICIONAR NOVO CONTEÚDO</h2>
+                <form id="addContentForm">
+                    <div class="input-group file-input-group">
+                        <label for="materialFile">Escolher arquivo</label>
+                        <div class="custom-file-upload">
+                            <input type="file" id="materialFile" name="materialFile" required>
+                            <label for="materialFile" class="button-file-upload">Escolher arquivo</label>
+                            <span id="fileName">Nenhum arquivo escolhido</span>
+                        </div>
+                        <div class="error-message" id="materialFileError"></div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="category">Categoria</label>
+                        <input type="text" id="category" name="category" placeholder="Ex: Matemática, História, Programação" required>
+                        <div class="error-message" id="categoryError"></div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="title">Título</label>
+                        <input type="text" id="title" name="title" placeholder="Título do material" required>
+                        <div class="error-message" id="titleError"></div>
+                    </div>
+
+                    <div class="feedback-message" id="feedbackMessage"></div>
+
+                    <button type="button" class="action-button discard-button" id="discardButton">Descartar</button>
+                    <button type="button" class="action-button clear-button" id="clearButton">Limpar</button>
+                    <button type="submit" class="action-button add-button" id="addButton">Adicionar</button>
+                </form>
+            </div>
+        </div> 
+    </div>
+    <script src="AdicionarConteudo/script.js"></script> 
+  </body>
+</html>
