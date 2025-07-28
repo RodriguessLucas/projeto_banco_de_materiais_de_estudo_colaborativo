@@ -1,8 +1,7 @@
 // /Perfil/script.js
-
+import { API_BASE_URL } from "../config";
 document.addEventListener('DOMContentLoaded', () => {
     // ---- CONFIGURAÇÃO E SEGURANÇA ----
-    const API_URL = 'http://localhost:5555';
     const token = localStorage.getItem('authToken');
 
     if (!token) {
@@ -18,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---- LÓGICA PRINCIPAL ----
     async function loadProfileData() {
         try {
-            const response = await fetch(`${API_URL}/usuarios/perfil`, {
+            const response = await fetch(`${API_BASE_URL}/usuarios/perfil`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`

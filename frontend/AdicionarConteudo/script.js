@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "../config";
+
 // Funções de menu lateral (mantidas)
 function openNav() {
   document.getElementById("mySidenav").style.width = "250px";
@@ -8,7 +10,7 @@ function closeNav() {
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    const API_URL = 'http://localhost:5555';
+    
     const token = localStorage.getItem('authToken');
 
     if (!token) {
@@ -50,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             
             addButton.textContent = 'Verificando matéria...';
-            const materiaResponse = await fetch(`${API_URL}/materias`, {
+            const materiaResponse = await fetch(`${API_BASE_URL}/materias`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -81,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('id_materia', materiaId); 
             formData.append('arquivo', file);
 
-            const uploadResponse = await fetch(`${API_URL}/usuario/cadastrarMateriais`, {
+            const uploadResponse = await fetch(`${API_BASE_URL}/usuario/cadastrarMateriais`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` },
                 body: formData,

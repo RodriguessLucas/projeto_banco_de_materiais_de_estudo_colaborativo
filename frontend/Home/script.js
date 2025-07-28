@@ -1,4 +1,5 @@
 // Funções do menu lateral
+import { API_BASE_URL } from "../config";
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
 }
@@ -8,7 +9,6 @@ function closeNav() {
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    const API_URL = 'http://localhost:5555';
     const token = localStorage.getItem('authToken');
 
     
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchAndRenderMaterials() {
         try {
-            const response = await fetch(`${API_URL}/materiais`, {
+            const response = await fetch(`${API_BASE_URL}/materiais`, {
                 method: 'GET',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
