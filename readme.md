@@ -1,4 +1,4 @@
-# # 📚 Banco de Materiais Colaborativo
+# 📚 Banco de Materiais Colaborativo
 
 ![Status do Projeto](https://img.shields.io/badge/status-andamento-yellow)
 ![Linguagem](https://img.shields.io/badge/linguagem-HTML%2FCSS%2FJS-blue)
@@ -41,6 +41,21 @@ Toda a documentação do projeto, incluindo a idealização e o planejamento, es
 
 * **Requisitos Funcionais e Não Funcionais**
 * **Personas**
+* **Casos de Uso**
+* E demais artefatos de desenvolvimento.
+
+---
+
+## 🛠️ Como Executar o Projeto
+
+A estrutura do código está organizada da seguinte maneira para desenvolvimento e produção:
+
+* **`main`**: Esta é a pasta (ou branch) principal que contém todos os arquivos do projeto.
+    * **Frontend**: O código do frontend pode ser executado tanto localmente, abrindo os arquivos `.html`, quanto pelo link de deploy.
+    * **Backend**: Para uma experiência completa de desenvolvimento e teste, o backend presente nesta pasta deve ser executado localmente na sua máquina.
+
+* **`tests/deploy_em_render`**: Esta pasta contém a versão do código que foi configurada especificamente para o deploy do backend na plataforma Render. Ela serve exclusivamente para a versão em produção da nossa API.
+
 ---
 
 ## 💡 Considerações Finais
