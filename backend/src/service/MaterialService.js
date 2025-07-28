@@ -24,6 +24,17 @@ class MaterialService{
 
     }
 
+    async listarTodos() {
+        try {
+            const materiais = await Material.findAll();
+            return materiais;
+        } catch (error) {
+            throw new Error(`Não foi possível buscar os materiais: ${error.message}`);
+        }
+    }  
+
+
+
 }
 
 module.exports = new MaterialService();

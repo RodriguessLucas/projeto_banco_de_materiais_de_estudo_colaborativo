@@ -8,7 +8,7 @@ class UsuarioService {
 
     const usuarioExiste = await Usuario.findOne({ where: { login } });
     if (usuarioExiste) {
-      throw new Error("Email em uso!");
+      throw new Error("Login já está em uso!");
     }
 
     const senhaHash = await bcrypt.hash(senha, 10);
@@ -21,9 +21,10 @@ class UsuarioService {
     novoUsuario.senha = undefined;
     return novoUsuario;
   }
+
   async obterPerfilLogado(id_usuario) {
     const usuario = await Usuario.findByPk(id_usuario, {
-      attributes: ["id_usuario", "nome", "login", "curso", "universidade", "qntd_estrelas"],
+      attributes: ["id_usuario", "nome", "login", "qntd_estrelas"],
       include: [
         {
           model: Material,
@@ -47,7 +48,9 @@ class UsuarioService {
       throw new Error("Usuário não encontrado.");
     }
 
-    const camposPermitidos = ["nome", "curso", "universidade"];
+
+    const camposPermitidos = ["nome"];
+
     camposPermitidos.forEach((campo) => {
       if (novosDados[campo] !== undefined) {
         usuario[campo] = novosDados[campo];
