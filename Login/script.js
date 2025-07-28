@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     localStorage.setItem('userId', data.usuarioDTO.id);
 
                     setTimeout(() => {
-                        window.location.href = "./home.html"; 
+                        window.location.href = "../home.html"; 
                     }, 1000);
                 } else {
                     throw new Error("A resposta do servidor não continha os dados do usuário.");

@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!token) {
         alert('Você precisa estar logado para adicionar conteúdo.');
-        window.location.href = './login.html';
+        window.location.href = '../login.html';
         return;
     }
 
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 feedbackMessage.textContent = 'Material adicionado com sucesso!';
                 feedbackMessage.className = 'feedback-message success';
                 addContentForm.reset();
-                setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+                setTimeout(() => { window.location.href = '../home.html'; }, 1500);
             } else {
                 throw new Error(`Erro no upload: ${uploadData.message || 'Não foi possível enviar o arquivo.'}`);
             }
