@@ -8,7 +8,8 @@ function closeNav() {
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    const API_URL = 'http://localhost:5555';
+    const API_URL = 'https://projeto-banco-de-materiais-de-estudo.onrender.com';
+    
     const token = localStorage.getItem('authToken');
 
     if (!token) {
