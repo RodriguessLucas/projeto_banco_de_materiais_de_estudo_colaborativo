@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const API_BASE_URL = 'http://localhost:5555';
     const profileForm = document.getElementById('profileForm');
     const nameInput = document.getElementById('name');
     const nameError = document.getElementById('nameError');

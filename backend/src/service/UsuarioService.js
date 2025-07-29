@@ -16,6 +16,8 @@ class UsuarioService {
     const novoUsuario = await Usuario.create({
       ...dadosUsuario,
       senha: senhaHash,
+      curso: curso,
+      universidade: universidade,
     });
 
     novoUsuario.senha = undefined;
