@@ -18,7 +18,8 @@ app.use(express.json());
 const allowedOrigins = [
   'http://127.0.0.1:5500',         
   'http://localhost:5555',           
-  'https://rodriguesslucas.github.io' 
+  'https://rodriguesslucas.github.io',
+  'https://projeto-banco-de-materiais-de-estudo.onrender.com/'
 ];
 
 
