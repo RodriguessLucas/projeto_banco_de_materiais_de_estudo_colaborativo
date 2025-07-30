@@ -16,8 +16,6 @@ class UsuarioService {
     const novoUsuario = await Usuario.create({
       ...dadosUsuario,
       senha: senhaHash,
-      curso: curso,
-      universidade: universidade,
     });
 
     novoUsuario.senha = undefined;
@@ -31,7 +29,7 @@ class UsuarioService {
         {
           model: Material,
           as: "materiais_criados",
-          attributes: ["id", "nome_material"],
+          attributes: ["id", "nome_material", "caminho_arquivo", "mimetype"],
         },
       ],
     });

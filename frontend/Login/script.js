@@ -1,8 +1,7 @@
-// /Login/script.js
 
+// /Login/script.js
 document.addEventListener('DOMContentLoaded', () => {
     const API_BASE_URL = 'http://localhost:5555';
-
     const loginForm = document.getElementById("login-form");
     const emailInput = document.getElementById("login-nome");
     const senhaInput = document.getElementById("login-senha");

@@ -14,31 +14,37 @@
         <a href="configuracoes.html">Configurações</a>
         <a href="login.html">Sair</a>
     </div>
-    <div class="header topo"> <h1>StudyShare - Compartilhando Estudos</h1>
+    <header class="header topo">
+        <h1>StudyShare - Compartilhando Estudos</h1>
         <div class="user-info">
             <a href="#" class="user-profile-link" onclick="openNav()">
               <img id="user-avatar" src="img/usuario.png" alt="Avatar do Usuário" class="user-avatar">
-              <span id="username-display" class="username-display">Usuário Padrão</span>
+              <span id="username-display" class="username-display">Carregando...</span>
             </a>
         </div>
-    </div>
-    <div class="main-content">
-        <div class="search-bar">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur excepturi eos atque amet incidunt voluptate rerum placeat, fugit itaque porro. Similique illum deleniti est minima nam incidunt qui ex aliquam.</p>
+    </header>
+
+    <main class="main-content">
+        <div class="details-container">
+            <div class="preview-column">
+                <a href="#" id="preview-link" target="_blank" title="Clique para abrir o arquivo em uma nova aba">
+                    <img id="material-preview" src="https://via.placeholder.com/600x400.png?text=Carregando..." alt="Preview do Material"/>
+                </a>
+            </div>
+            <div class="details-column">
+                <h2 id="material-title">Carregando...</h2>
+                <ul class="details-list">
+                    <li><h4>Postado por:</h4> <span id="material-author">...</span></li>
+                    <li><h4>Data de Upload:</h4> <span id="material-date">...</span></li>
+                    <li><h4>Descrição:</h4> <span id="material-description">...</span></li>
+                </ul>
+                <a href="#" id="download-button" class="action-button">Fazer Download</a>
+            </div>
         </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Buscar..." class="search-input">
+         <div class="actions-container">
+            <a href="home.html" class="back-button">⬅ Voltar para a Home</a>
         </div>
-        <div class="card">
-            <img src="img/mat-discreta.jpg"/>
-            <h2>MATEMÁTICA DISCRETA</h2>
-            <ul>
-                <li><h4>Postado por:</h4> Fulano</li>
-                <li><h4>Descrição:</h4> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis, eum.</li>
-                <li><h4>Data:</h4> 09/09/1999</li>
-            </ul>
-        </div>
-    </div>
+    </main>
     <script src="DetalhesConteudo/script.js"></script> 
-  </body>
+</body>
 </html>

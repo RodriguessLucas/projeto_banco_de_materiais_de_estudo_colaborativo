@@ -1,6 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     const API_BASE_URL = 'http://localhost:5555';
     const profileForm = document.getElementById('profileForm');
+    
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        window.location.href = './login.html';
+        return;
+    }
+
     const nameInput = document.getElementById('name');
     const nameError = document.getElementById('nameError');
     const toast = document.getElementById('toast');
@@ -10,37 +17,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const imagePreview = document.getElementById('imagePreview');
     const defaultIcon = document.querySelector('.default-icon');
 
-    // Carrega os dados salvos quando a página de configurações abrir
     loadProfileData();
     
-    // Lógica de upload de imagem
     uploadButton.addEventListener('click', () => imageUpload.click());
-
-    imageUpload.addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                imagePreview.src = e.target.result;
-                imagePreview.style.display = 'block';
-                defaultIcon.style.display = 'none';
-            }
-            reader.readAsDataURL(file);
-        }
-    });
-
-    removeButton.addEventListener('click', function() {
-        imagePreview.src = '';
-        imagePreview.style.display = 'none';
-        defaultIcon.style.display = 'block';
-        imageUpload.value = '';
-    });
 
     profileForm.addEventListener('submit', function(event) {
         event.preventDefault();
         if (validateForm()) {
-            saveProfileData();
-            showToast("Perfil salvo com sucesso!");
+            saveProfileData(); 
         }
     });
 
@@ -61,24 +45,39 @@ document.addEventListener('DOMContentLoaded', function() {
         return isValid;
     }
     
-    // --- FUNÇÃO DE SALVAR CORRIGIDA ---
-    function saveProfileData() {
+    async function saveProfileData() {
         const nameValue = nameInput.value.trim();
-        const avatarSrc = imagePreview.src;
 
-        // Salva com as chaves que a outra página está lendo
-        localStorage.setItem('loggedInUsername', nameValue);
+        try {
+            const response = await fetch(`${API_BASE_URL}/usuarios/perfil`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` 
+                },
+                body: JSON.stringify({ nome: nameValue }), 
+            });
 
-        if (avatarSrc && imagePreview.style.display === 'block') {
-            localStorage.setItem('loggedInUserAvatar', avatarSrc);
-        } else {
-            localStorage.removeItem('loggedInUserAvatar');
+            const updatedProfile = await response.json();
+
+            if (!response.ok) {
+                throw new Error(updatedProfile.erro || 'Não foi possível atualizar o perfil.');
+            }
+
+        
+            localStorage.setItem('userName', updatedProfile.nome);
+            
+            
+            alert("Perfil salvo com sucesso!");
+            window.location.href = 'home.html';
+
+        } catch (error) {
+            console.error('Erro ao salvar perfil:', error);
+            alert(`Erro: ${error.message}`); 
         }
     }
 
-    // --- FUNÇÃO DE CARREGAR CORRIGIDA ---
     function loadProfileData() {
-        // Carrega usando as chaves corretas para preencher o formulário
         const savedUsername = localStorage.getItem('loggedInUsername');
         const savedAvatar = localStorage.getItem('loggedInUserAvatar');
 
@@ -91,13 +90,5 @@ document.addEventListener('DOMContentLoaded', function() {
             imagePreview.style.display = 'block';
             defaultIcon.style.display = 'none';
         }
-    }
-
-    function showToast(message) {
-        toast.textContent = message;
-        toast.className = 'show';
-        setTimeout(function() {
-            toast.className = toast.className.replace('show', '');
-        }, 3000);
     }
 });

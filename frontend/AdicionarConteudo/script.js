@@ -7,9 +7,7 @@ function closeNav() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    
     const API_BASE_URL = 'http://localhost:5555';
-    
     const token = localStorage.getItem('authToken');
 
     if (!token) {
@@ -17,41 +15,64 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = './login.html';
         return;
     }
-
     
+    const usernameDisplay = document.getElementById('username-display');
+
+    function loadUserInfo() {
+        const username = localStorage.getItem('userName');
+        if (usernameDisplay && username) {
+            usernameDisplay.textContent = username;
+        }
+    }
+    
+
     const addContentForm = document.getElementById('addContentForm');
     const materialFileInput = document.getElementById('materialFile');
+    const fileNameSpan = document.getElementById('fileName'); // Pega o <span> para o nome do arquivo
     const titleInput = document.getElementById('title');
     const materiaNameInput = document.getElementById('materia-name');
     const categoryNameInput = document.getElementById('category-name');
+    const descriptionInput = document.getElementById('description');
+    const institutionInput = document.getElementById('institution');
+    const courseInput = document.getElementById('course');
+    const professorInput = document.getElementById('professor');
     const addButton = document.getElementById('addButton');
     const feedbackMessage = document.getElementById('feedbackMessage');
-    
 
-    
+
+    materialFileInput.addEventListener('change', () => {
+        if (materialFileInput.files.length > 0) {
+            fileNameSpan.textContent = materialFileInput.files[0].name;
+        } else {
+            fileNameSpan.textContent = 'Nenhum arquivo escolhido';
+        }
+    });
+    // FIM DA CORREÇÃO
+
     addContentForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         feedbackMessage.textContent = '';
         addButton.disabled = true;
 
-        // Pega os valores dos campos
         const file = materialFileInput.files[0];
         const title = titleInput.value.trim();
         const nomeMateria = materiaNameInput.value.trim();
         const nomeCategoria = categoryNameInput.value.trim();
+        const description = descriptionInput ? descriptionInput.value.trim() : '';
+        const institution = institutionInput ? institutionInput.value.trim() : '';
+        const course = courseInput ? courseInput.value.trim() : '';
+        const professor = professorInput ? professorInput.value.trim() : '';
 
-        // Validação simples
-        if (!file || !title || !nomeMateria || !nomeCategoria) {
-            feedbackMessage.textContent = 'Todos os campos são obrigatórios.';
+        if (!file || !title || !nomeMateria) {
+            feedbackMessage.textContent = 'Arquivo, título e nome da matéria são obrigatórios.';
             feedbackMessage.className = 'feedback-message error';
             addButton.disabled = false;
             return;
         }
 
         try {
-            
             addButton.textContent = 'Verificando matéria...';
-            const materiaResponse = await fetch(`${API_URL}/materias`, {
+            const materiaResponse = await fetch(`${API_BASE_URL}/materias`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify({
                     nome_materia: nomeMateria,
-                    nome_categoria: nomeCategoria
+                    nome_categoria: nomeCategoria || 'Genérico'
                 })
             });
 
@@ -69,20 +90,24 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const materiaData = await materiaResponse.json();
-            const materiaId = materiaData.id_materia; 
+            const materiaId = materiaData.id;
 
             if (!materiaId) {
                 throw new Error('Não foi possível obter o ID da matéria da resposta da API.');
             }
-
             
             addButton.textContent = 'Enviando arquivo...';
             const formData = new FormData();
-            formData.append('title', title);
-            formData.append('id_materia', materiaId); 
+            
             formData.append('arquivo', file);
+            formData.append('nome_material', title);
+            formData.append('id_materia', materiaId);
+            formData.append('descricao_material', description);
+            formData.append('instituicao', institution);
+            formData.append('curso', course);
+            formData.append('nome_professor', professor);
 
-            const uploadResponse = await fetch(`${API_URL}/usuario/cadastrarMateriais`, {
+            const uploadResponse = await fetch(`${API_BASE_URL}/usuario/cadastrarMateriais`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` },
                 body: formData,
@@ -107,4 +132,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    loadUserInfo();
 });

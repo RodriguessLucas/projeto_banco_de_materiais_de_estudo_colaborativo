@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const API_URL = 'https://projeto-banco-de-materiais-de-estudo.onrender.com';
+    const API_BASE_URL = 'http://localhost:5555';
 
     const cadastroForm = document.getElementById('cadastroForm');
     const nomeCompletoInput = document.getElementById('nomeCompleto');
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 idade: 0 
             };
 
-            const response = await fetch(`${API_URL}/cadastrarUsuario`, {
+            const response = await fetch(`${API_BASE_URL}/cadastrarUsuario`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

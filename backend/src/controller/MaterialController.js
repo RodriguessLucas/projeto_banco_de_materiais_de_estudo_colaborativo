@@ -6,10 +6,16 @@ class MaterialController{
         try{
             const idUsuarioAut = req.userId; 
 
+            const dadosDoBody = {
+                ...req.body,
+                id_materia: parseInt(req.body.id_materia, 10),
+            };
+
             const dadosParaSalvar = {
                 ...req.body,
                 id_usuario: idUsuarioAut,
                 caminho_arquivo: req.file.filename,
+                mimetype: req.file.mimetype,
             };
             
             const material = await MaterialService.criarMaterial(dadosParaSalvar);
@@ -29,6 +35,28 @@ class MaterialController{
             return res.status(200).json(materiais);
         } catch (error) {
             return res.status(500).json({ message: error.message });
+        }
+    }
+    async buscarPorId(req, res) {
+        try {
+            const { id } = req.params;
+            const material = await MaterialService.buscarPorId(id);
+            return res.status(200).json(material);
+        } catch (error) {
+            return res.status(404).json({ message: error.message });
+        }
+    }
+
+    async download(req, res) {
+        try {
+        const { id } = req.params;
+
+        const caminhoDoArquivo = await MaterialService.obterCaminhoMaterial(id);
+        
+        return res.download(caminhoDoArquivo);
+
+        } catch (error) {
+        return res.status(404).json({ message: error.message });
         }
     }
 }

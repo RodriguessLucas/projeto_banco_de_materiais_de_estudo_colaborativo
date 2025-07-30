@@ -28,6 +28,7 @@ class UsuarioController {
       return res.status(400).json({ erro: error.message });
     }
   }
+  
 }
 
 module.exports = new UsuarioController();

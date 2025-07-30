@@ -323,7 +323,7 @@ const swaggerOptions = {
           },
         },
       },
-      "/materias": {
+      "/materiais": {
         post: {
           summary: "Encontra uma matéria ou a cria se não existir",
           tags: ["Materiais"],
@@ -357,6 +357,38 @@ const swaggerOptions = {
             '401': { description: "Não autorizado" }
           }
         }
+      },
+      "/materiais/{id}": {
+        get: {
+          summary: "Busca um material específico pelo seu ID",
+          tags: ["Materiais"],
+          security: [{ bearerAuth: [] }],
+          parameters: [
+            {
+              name: "id",
+              in: "path",
+              required: true,
+              description: "O ID do material que você quer buscar.",
+              schema: {
+                type: "integer",
+              },
+            },
+          ],
+          responses: {
+            '200': {
+              description: "Dados do material retornados com sucesso.",
+              content: {
+                "application/json": {
+                  schema: {
+                    $ref: "#/components/schemas/MaterialResponse",
+                  },
+                },
+              },
+            },
+            '401': { description: "Não autorizado (token inválido ou não fornecido)" },
+            '404': { description: "Material não encontrado" },
+          },
+        },
       },
     },
   },

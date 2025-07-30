@@ -52,7 +52,11 @@ class Material extends Model{
             caminho_arquivo: {
                 type: DataTypes.STRING,
                 allowNull: false,
-            }
+            },
+            mimetype: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
         },
         {   
             sequelize,

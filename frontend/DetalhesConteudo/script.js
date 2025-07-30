@@ -1,151 +1,128 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const API_BASE_URL = 'http://localhost:5555';
-    // --- Seleção de Elementos do DOM ---
-    const usernameDisplay = document.getElementById('username-display');
-    const userAvatar = document.getElementById('user-avatar');
-    const addContentForm = document.getElementById('addContentForm');
-    const materialFileInput = document.getElementById('materialFile');
-    const fileNameSpan = document.getElementById('fileName');
-    const categoryInput = document.getElementById('category');
-    const titleInput = document.getElementById('title');
-    const feedbackMessage = document.getElementById('feedbackMessage');
-    const discardButton = document.getElementById('discardButton');
-    const clearButton = document.getElementById('clearButton');
-    const addButton = document.getElementById('addButton');
-
-    // Elementos para mensagens de erro individuais
-    const materialFileError = document.getElementById('materialFileError');
-    const categoryError = document.getElementById('categoryError');
-    const titleError = document.getElementById('titleError');
-
-    // --- Funções Principais ---
-
-    /**
-     * Carrega as informações do usuário salvas no localStorage.
-     * Nota: Garanta que as chaves 'loggedInUsername' e 'loggedInUserAvatar' são as mesmas
-     * usadas na sua página de configurações ao salvar os dados.
-     */
-    function loadUserInfo() {
-        const username = localStorage.getItem('loggedInUsername') || 'Usuário Padrão';
-        const userAvatarUrl = localStorage.getItem('loggedInUserAvatar') || 'placeholder-avatar.png'; // Imagem padrão
-
-        usernameDisplay.textContent = username;
-        userAvatar.src = userAvatarUrl;
-    }
-
-    /**
-     * Limpa completamente o formulário, incluindo mensagens de erro e feedback.
-     * Função centralizada para evitar repetição de código.
-     */
-    function clearForm() {
-        addContentForm.reset();
-        fileNameSpan.textContent = 'Nenhum arquivo escolhido';
-
-        // Limpa a mensagem de feedback principal
-        feedbackMessage.textContent = '';
-        feedbackMessage.className = 'feedback-message';
-
-        // Limpa todas as mensagens de erro individuais e classes de erro dos inputs
-        const errorMessages = [materialFileError, categoryError, titleError];
-        errorMessages.forEach(el => el.textContent = '');
-
-        const inputsWithErrors = [categoryInput, titleInput];
-        inputsWithErrors.forEach(el => el.classList.remove('error'));
-    }
-    
-    /**
-     * Valida o formulário e exibe mensagens de erro específicas.
-     * @returns {boolean} - Retorna true se todos os campos são válidos.
-     */
-    function validateForm() {
-        // Limpa erros antigos antes de uma nova validação
-        [materialFileError, categoryError, titleError].forEach(el => el.textContent = '');
-        [categoryInput, titleInput].forEach(el => el.classList.remove('error'));
-
-        let isValid = true;
-
-        if (materialFileInput.files.length === 0) {
-            materialFileError.textContent = 'Por favor, escolha um arquivo.';
-            isValid = false;
-        }
-
-        if (categoryInput.value.trim() === '') {
-            categoryError.textContent = 'Por favor, digite a categoria.';
-            categoryInput.classList.add('error'); // Adiciona classe de erro visual
-            isValid = false;
-        }
-
-        if (titleInput.value.trim() === '') {
-            titleError.textContent = 'Por favor, digite o título.';
-            titleInput.classList.add('error'); // Adiciona classe de erro visual
-            isValid = false;
-        }
-
-        return isValid;
-    }
-
-    // --- Configuração dos Eventos ---
-
-    // Atualiza o nome do arquivo na interface
-    materialFileInput.addEventListener('change', () => {
-        if (materialFileInput.files.length > 0) {
-            fileNameSpan.textContent = materialFileInput.files[0].name;
-            materialFileError.textContent = ''; // Limpa o erro específico ao selecionar um arquivo
-        } else {
-            fileNameSpan.textContent = 'Nenhum arquivo escolhido';
-        }
-    });
-
-    // Botão "Limpar" chama a função centralizada
-    clearButton.addEventListener('click', clearForm);
-
-    // Botão "Descartar" pede confirmação e redireciona
-    discardButton.addEventListener('click', () => {
-        if (confirm('Tem certeza que deseja descartar e voltar para a página inicial?')) {
-            window.location.href = 'home.html';
-        }
-    });
-
-    // Evento de submissão do formulário
-    addContentForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-
-        if (!validateForm()) {
-            feedbackMessage.textContent = 'Por favor, corrija os erros indicados.';
-            feedbackMessage.className = 'feedback-message error'; // Usa a classe de erro
-            return;
-        }
-
-        // Limpa mensagens antigas e desabilita o botão para feedback de "carregando"
-        feedbackMessage.textContent = '';
-        feedbackMessage.className = 'feedback-message';
-        addButton.disabled = true;
-        addButton.textContent = 'Adicionando...';
-
-        // Simulação de envio para o servidor
-        setTimeout(() => {
-            feedbackMessage.textContent = 'Material adicionado com sucesso!';
-            feedbackMessage.className = 'feedback-message success';
-            clearForm(); // Usa a função centralizada para limpar o form
-
-            // Reabilita o botão após a conclusão
-            addButton.disabled = false;
-            addButton.textContent = 'Adicionar';
-        }, 1500);
-    });
-
-    // --- Inicialização ---
-    loadUserInfo();
-});
-
-//novo
-
-/* Set the width of the side navigation to 250px */
+// Funções de menu lateral
 function openNav() {
   document.getElementById("mySidenav").style.width = "250px";
 }
-
-/* Set the width of the side navigation to 0 */
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const API_BASE_URL = 'http://localhost:5555';
+    const token = localStorage.getItem('authToken');
+    
+    const usernameDisplay = document.getElementById('username-display');
+
+    function loadUserInfo() {
+        const username = localStorage.getItem('userName');
+        if (usernameDisplay && username) {
+            usernameDisplay.textContent = username;
+        }
+    }
+
+    if (!token) {
+        window.location.href = './login.html';
+        return;
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const materialId = urlParams.get('id');
+
+    const materialTitle = document.getElementById('material-title');
+    const materialDescription = document.getElementById('material-description');
+    const materialAuthor = document.getElementById('material-author');
+    const materialDate = document.getElementById('material-date');
+    const materialPreview = document.getElementById('material-preview');
+    const downloadButton = document.getElementById('download-button');
+    const previewLink = document.getElementById('preview-link');
+
+    async function fetchMaterialDetails() {
+        if (!materialId) {
+            document.querySelector('.main-content').innerHTML = '<h1>ID do material não fornecido.</h1>';
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/materiais/${materialId}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (!response.ok) {
+                throw new Error('Material não encontrado.');
+            }
+
+            const material = await response.json();
+
+            // Preenche os elementos da página
+            materialTitle.textContent = material.nome_material.toUpperCase();
+            materialDescription.textContent = material.descricao_material || 'Nenhuma descrição fornecida.';
+            materialAuthor.textContent = material.criador ? material.criador.nome : 'Autor desconhecido';
+            materialDate.textContent = new Date(material.createdAt).toLocaleDateString('pt-BR');
+            
+            // Lógica de preview (continua a mesma)
+            if (material.mimetype && material.mimetype.startsWith('image/')) {
+                materialPreview.src = `${API_BASE_URL}/uploads/${material.caminho_arquivo}`;
+            } else {
+                materialPreview.src = '../img/pdfpreview.png';
+            }
+
+            downloadButton.dataset.materialId = material.id;
+            previewLink.dataset.materialId = material.id;
+
+        } catch (error) {
+            console.error(error);
+            document.querySelector('.main-content').innerHTML = `<h1>Erro ao carregar material: ${error.message}</h1>`;
+        }
+    }
+
+
+    async function handleDownload(event) {
+        event.preventDefault();
+        const materialId = event.currentTarget.dataset.materialId;
+        if (!materialId) return;
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/materiais/${materialId}/download`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Falha no download.');
+            }
+
+           
+            const disposition = response.headers.get('content-disposition');
+            let filename = 'material.bin';
+            if (disposition && disposition.includes('attachment')) {
+                const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                const matches = filenameRegex.exec(disposition);
+                if (matches != null && matches[1]) { 
+                filename = matches[1].replace(/['"]/g, '');
+                }
+            }
+
+            
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+
+        } catch(error) {
+            console.error('Erro ao baixar o arquivo:', error);
+            alert(error.message);
+        }
+    }
+
+    loadUserInfo();
+    fetchMaterialDetails();
+
+
+    downloadButton.addEventListener('click', handleDownload);
+    previewLink.addEventListener('click', handleDownload);
+});

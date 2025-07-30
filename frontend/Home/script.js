@@ -1,4 +1,3 @@
-// Funções do menu lateral
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
 }
@@ -7,8 +6,9 @@ function closeNav() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    
     const API_BASE_URL = 'http://localhost:5555';
+    
+    
     const token = localStorage.getItem('authToken');
 
     
@@ -17,15 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // ---- ELEMENTOS DA PÁGINA ----
+
     const usernameDisplay = document.getElementById('username-display');
     const userAvatar = document.getElementById('user-avatar');
     const materialsGrid = document.getElementById('card-grid'); 
     const logoutLink = document.getElementById('logout-link');
 
-    // ---- LÓGICA DA PÁGINA ----
+    
 
-    // 1. Carrega informações do usuário do localStorage
+    
     function loadUserInfo() {
         const username = localStorage.getItem('userName'); 
         const userAvatarUrl = localStorage.getItem('userAvatar'); 
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // 2. Configura o botão de Sair
+   
     if (logoutLink) {
         logoutLink.addEventListener('click', (e) => {
             e.preventDefault();
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchAndRenderMaterials() {
         try {
-            const response = await fetch(`${API_URL}/materiais`, {
+            const response = await fetch(`${API_BASE_URL}/materiais`, {
                 method: 'GET',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -71,17 +71,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Exibe os materiais recebidos
             materials.forEach(material => {
                 const cardLink = document.createElement('a');
-              
+                cardLink.href = `./detalhes-conteudo.html?id=${material.id}`;
+                cardLink.className = 'card-link'; 
                 
                 const card = document.createElement('div');
                 card.className = 'card'; 
                 
+                let previewSrc = '';
+
+                if (material.mimetype && material.mimetype.startsWith('image/')) {
+                    previewSrc = `${API_BASE_URL}/uploads/${material.caminho_arquivo}`;
+                } 
+                else if (material.mimetype === 'application/pdf') {
+                    previewSrc = '../img/pdfpreview.png'; 
+                } 
+                
+                else {
+                    previewSrc = 'https://via.placeholder.com/300x200.png?text=Material';
+                }
+                
                 card.innerHTML = `
-                    <img src="https://via.placeholder.com/300x200.png?text=Preview" alt="Preview do Material">
-                    <h2>${material.title.toUpperCase()}</h2>
+                    <img src="${previewSrc}" alt="Preview do Material" style="object-fit: cover; height: 120px;">
+                    <h2 style="font-size: 1rem; margin: 8px;">${material.nome_material.toUpperCase()}</h2>
                 `;
                 
                 cardLink.appendChild(card);
@@ -93,8 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
             materialsGrid.innerHTML = '<p style="text-align: center; color: red; width: 100%;">Ocorreu um erro ao carregar os materiais.</p>';
         }
     }
-
-    // --- INICIALIZAÇÃO ---
+    
     loadUserInfo();
     fetchAndRenderMaterials();
 });
